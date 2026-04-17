@@ -78,16 +78,5 @@ class Peminjaman extends BaseController {
         $this->pinjam->delete($id);
         return redirect()->to('/peminjaman')->with('success', 'Data dihapus');
     }
-    public function kembalikan($id) {
-    $dataPinjam = $this->pinjam->find($id);
     
-    // Ubah status
-    $this->pinjam->update($id, ['status' => 'di kembalikan']);
-    
-    // Tambah stok buku kembali
-    $buku = $this->buku->find($dataPinjam['id_buku']);
-    $this->buku->update($dataPinjam['id_buku'], ['tersedia' => $buku['tersedia'] + 1]);
-
-    return redirect()->to('/peminjaman')->with('success', 'Buku telah dikembalikan');
-}
 }
