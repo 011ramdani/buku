@@ -45,9 +45,7 @@ $routes->get('buku/wa/(:num)', 'Buku::wa/$1');
 $routes->get('peminjaman', 'Peminjaman::index');
 $routes->get('peminjaman/create', 'Peminjaman::create');
 $routes->post('peminjaman/store', 'Peminjaman::store');
-$routes->get('peminjaman', 'Peminjaman::index');
-$routes->get('peminjaman/create', 'Peminjaman::create');
-$routes->post('peminjaman/store', 'Peminjaman::store');
 $routes->get('peminjaman/edit/(:num)', 'Peminjaman::edit/$1');
 $routes->post('peminjaman/update/(:num)', 'Peminjaman::update/$1');
-$routes->get('peminjaman/delete/(:num)', 'Peminjaman::delete/$1');
+$routes->delete('peminjaman/delete/(:num)', 'Peminjaman::delete/$1'); // Ubah jadi delete
+$routes->get('peminjaman/detail/(:num)', 'Peminjaman::detail/$1');
