@@ -17,7 +17,8 @@ Masuk sebagai: <b><?= session('nama'); ?> (<?= session('role'); ?>)</b>
     <a href="<?= base_url('users/edit/' . $idu) ?>">
         Setting
     </a><br>
+     <a href="<?= base_url('/buku') ?>"> Buku </a><br>
     <li>
         <a href="<?= base_url('/logout') ?>">Log Out</a>
     </li>
-       <a href="<?= base_url('/buku') ?>"> Buku </a><br>
+      

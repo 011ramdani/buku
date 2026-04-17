@@ -4,14 +4,22 @@ use CodeIgniter\Model;
 
 class PeminjamanModel extends Model {
     protected $table = 'peminjaman';
-    protected $primaryKey = 'id_pinjam';
-    protected $allowedFields = ['id_user', 'id_buku', 'tanggal_pinjam', 'tanggal_kembali', 'status'];
+    protected $primaryKey = 'id_peminjaman'; // Sesuai gambar
+    protected $allowedFields = [
+        'id_anggota', 
+        'id_buku', 
+        'id_petugas', 
+        'tanggal_pinjam', 
+        'tanggal_kembali', 
+        'status'
+    ];
 
     public function getPeminjaman()
     {
-        return $this->select('peminjaman.*, users.nama, buku.judul')
-                    ->join('users', 'users.id = peminjaman.id_user')
-                    ->join('buku', 'buku.id = peminjaman.id_buku')
+        // Join ke tabel lain agar muncul nama & judul (sesuaikan primary key tabel masing-masing)
+        return $this->select('peminjaman.*, users.nama as nama_anggota, buku.judul_buku')
+                    ->join('users', 'users.id = peminjaman.id_anggota') 
+                    ->join('buku', 'buku.id_buku = peminjaman.id_buku')
                     ->findAll();
     }
 }
