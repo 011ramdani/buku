@@ -2,7 +2,7 @@
 
 use App\Models\PeminjamanModel;
 use App\Models\BukuModel;
-use App\Models\UserModel;
+use App\Models\UsersModel;
 
 class Peminjaman extends BaseController {
     protected $pinjam, $buku, $user;
@@ -10,9 +10,10 @@ class Peminjaman extends BaseController {
     public function __construct() {
         $this->pinjam = new PeminjamanModel();
         $this->buku = new BukuModel();
-        $this->user = new UserModel();
+        $this->user = new UsersModel();
     }
 
+    // READ: Tampil Data
     public function index() {
         $data = [
             'title' => 'Data Peminjaman',
@@ -21,31 +22,72 @@ class Peminjaman extends BaseController {
         return view('peminjaman/index', $data);
     }
 
+    // CREATE: Form Tambah
     public function create() {
         $data = [
             'title' => 'Tambah Peminjaman',
             'users' => $this->user->findAll(),
-            'buku'  => $this->buku->where('stok >', 0)->findAll() // Hanya buku yang ada stok
+            'buku'  => $this->buku->where('tersedia >', 0)->findAll()
         ];
         return view('peminjaman/create', $data);
     }
 
+    // CREATE: Proses Simpan
     public function store() {
         $id_buku = $this->request->getPost('id_buku');
-
-        // 1. Simpan data peminjaman
         $this->pinjam->save([
-            'id_user'        => $this->request->getPost('id_user'),
-            'id_buku'        => $id_buku,
-            'tanggal_pinjam' => date('Y-m-d'),
-            'tanggal_kembali'=> $this->request->getPost('tanggal_kembali'),
-            'status'         => 'dipinjam'
+            'id_anggota'      => $this->request->getPost('id_anggota'),
+            'id_buku'         => $id_buku,
+            'id_petugas'      => session()->get('id'),
+            'tanggal_pinjam'  => $this->request->getPost('tanggal_pinjam'),
+            'tanggal_kembali' => $this->request->getPost('tanggal_kembali'),
+            'status'          => 'di pinjam'
         ]);
 
-        // 2. Kurangi stok buku
-        $bukuLama = $this->buku->find($id_buku);
-        $this->buku->update($id_buku, ['stok' => $bukuLama['stok'] - 1]);
+        // Kurangi stok buku
+        $buku = $this->buku->find($id_buku);
+        $this->buku->update($id_buku, ['tersedia' => $buku['tersedia'] - 1]);
 
-        return redirect()->to('/peminjaman')->with('success', 'Buku berhasil dipinjam!');
+        return redirect()->to('/peminjaman')->with('success', 'Data berhasil dipinjam');
     }
+
+    // UPDATE: Form Edit
+    public function edit($id) {
+        $data = [
+            'title' => 'Edit Peminjaman',
+            'pinjam' => $this->pinjam->find($id),
+            'users' => $this->user->findAll(),
+            'buku'  => $this->buku->findAll()
+        ];
+        return view('peminjaman/edit', $data);
+    }
+
+    // UPDATE: Proses Update
+    public function update($id) {
+        $this->pinjam->update($id, [
+            'id_anggota'      => $this->request->getPost('id_anggota'),
+            'id_buku'         => $this->request->getPost('id_buku'),
+            'tanggal_kembali' => $this->request->getPost('tanggal_kembali'),
+            'status'          => $this->request->getPost('status')
+        ]);
+        return redirect()->to('/peminjaman')->with('success', 'Data diperbarui');
+    }
+
+    // DELETE: Hapus Data
+    public function delete($id) {
+        $this->pinjam->delete($id);
+        return redirect()->to('/peminjaman')->with('success', 'Data dihapus');
+    }
+    public function kembalikan($id) {
+    $dataPinjam = $this->pinjam->find($id);
+    
+    // Ubah status
+    $this->pinjam->update($id, ['status' => 'di kembalikan']);
+    
+    // Tambah stok buku kembali
+    $buku = $this->buku->find($dataPinjam['id_buku']);
+    $this->buku->update($dataPinjam['id_buku'], ['tersedia' => $buku['tersedia'] + 1]);
+
+    return redirect()->to('/peminjaman')->with('success', 'Buku telah dikembalikan');
+}
 }

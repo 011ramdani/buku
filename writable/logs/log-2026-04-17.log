@@ -703,3 +703,373 @@ DEBUG - 2026-04-17 07:42:27 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2026-04-17 07:42:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-04-17 07:42:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-04-17 07:43:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-17 07:46:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-17 07:46:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-17 07:49:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-17 07:49:18 --> Error: Class "App\Models\UserModel" not found
+[Method: GET, Route: peminjaman]
+in APPPATH\Controllers\Peminjaman.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Peminjaman->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:49:52 --> Error: Class "App\Models\UserModel" not found
+[Method: GET, Route: peminjaman]
+in APPPATH\Controllers\Peminjaman.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Peminjaman->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:49:53 --> Error: Class "App\Models\UserModel" not found
+[Method: GET, Route: peminjaman]
+in APPPATH\Controllers\Peminjaman.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Peminjaman->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:51:00 --> Error: Class "App\Models\UserModel" not found
+[Method: GET, Route: peminjaman]
+in APPPATH\Controllers\Peminjaman.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Peminjaman->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:51:01 --> Error: Class "App\Models\UserModel" not found
+[Method: GET, Route: peminjaman]
+in APPPATH\Controllers\Peminjaman.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Peminjaman->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-17 07:51:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-17 07:51:04 --> Error: Class "App\Models\UserModel" not found
+[Method: GET, Route: peminjaman]
+in APPPATH\Controllers\Peminjaman.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Peminjaman->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:51:38 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\PeminjamanModel::getPeminjaman
+[Method: GET, Route: peminjaman]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Peminjaman.php(20): CodeIgniter\Model->__call('getPeminjaman', [])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:51:39 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\PeminjamanModel::getPeminjaman
+[Method: GET, Route: peminjaman]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Peminjaman.php(20): CodeIgniter\Model->__call('getPeminjaman', [])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:51:40 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\PeminjamanModel::getPeminjaman
+[Method: GET, Route: peminjaman]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Peminjaman.php(20): CodeIgniter\Model->__call('getPeminjaman', [])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2026-04-17 07:53:25 --> mysqli_sql_exception: Unknown column 'buku.judul_buku' in 'field list' in C:\xampp\htdocs\buku\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\buku\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `peminja...', 0)
+#1 C:\xampp\htdocs\buku\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `peminja...')
+#2 C:\xampp\htdocs\buku\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `peminja...')
+#3 C:\xampp\htdocs\buku\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminja...', Array, false)
+#4 C:\xampp\htdocs\buku\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\buku\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\buku\app\Models\PeminjamanModel.php(19): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\buku\app\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+#8 C:\xampp\htdocs\buku\system\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+#9 C:\xampp\htdocs\buku\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+#10 C:\xampp\htdocs\buku\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\buku\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\buku\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\buku\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2026-04-17 07:53:25 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'buku.judul_buku' in 'field list'
+[Method: GET, Route: peminjaman]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\PeminjamanModel.php(19): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:53:25 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'buku.judul_buku' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\PeminjamanModel.php(19): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:53:25 --> [Caused by] mysqli_sql_exception: Unknown column 'buku.judul_buku' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\PeminjamanModel.php(19): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2026-04-17 07:53:27 --> mysqli_sql_exception: Unknown column 'buku.judul_buku' in 'field list' in C:\xampp\htdocs\buku\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\buku\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `peminja...', 0)
+#1 C:\xampp\htdocs\buku\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `peminja...')
+#2 C:\xampp\htdocs\buku\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `peminja...')
+#3 C:\xampp\htdocs\buku\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminja...', Array, false)
+#4 C:\xampp\htdocs\buku\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\buku\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\buku\app\Models\PeminjamanModel.php(19): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\buku\app\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+#8 C:\xampp\htdocs\buku\system\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+#9 C:\xampp\htdocs\buku\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+#10 C:\xampp\htdocs\buku\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\buku\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\buku\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\buku\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2026-04-17 07:53:27 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'buku.judul_buku' in 'field list'
+[Method: GET, Route: peminjaman]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\PeminjamanModel.php(19): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:53:27 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'buku.judul_buku' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\PeminjamanModel.php(19): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:53:27 --> [Caused by] mysqli_sql_exception: Unknown column 'buku.judul_buku' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul_buku`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\PeminjamanModel.php(19): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:56:53 --> ParseError: Unclosed '{' on line 8
+[Method: GET, Route: peminjaman]
+in APPPATH\Models\PeminjamanModel.php on line 21.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\buku\\app\\Models\\PeminjamanModel.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Models\\PeminjamanModel')
+ 3 APPPATH\Controllers\Peminjaman.php(11): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Models\\PeminjamanModel')
+ 4 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Peminjaman->__construct()
+ 5 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2026-04-17 07:57:05 --> mysqli_sql_exception: Unknown column 'peminjaman.id_buku' in 'on clause' in C:\xampp\htdocs\buku\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\buku\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `peminja...', 0)
+#1 C:\xampp\htdocs\buku\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `peminja...')
+#2 C:\xampp\htdocs\buku\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `peminja...')
+#3 C:\xampp\htdocs\buku\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminja...', Array, false)
+#4 C:\xampp\htdocs\buku\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\buku\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\buku\app\Models\PeminjamanModel.php(20): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\buku\app\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+#8 C:\xampp\htdocs\buku\system\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+#9 C:\xampp\htdocs\buku\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+#10 C:\xampp\htdocs\buku\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\buku\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\buku\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\buku\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2026-04-17 07:57:05 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'peminjaman.id_buku' in 'on clause'
+[Method: GET, Route: peminjaman]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\PeminjamanModel.php(20): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:57:05 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'peminjaman.id_buku' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\PeminjamanModel.php(20): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 07:57:05 --> [Caused by] mysqli_sql_exception: Unknown column 'peminjaman.id_buku' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `peminjaman`.*, `users`.`nama` as `nama_anggota`, `buku`.`judul`
+FROM `peminjaman`
+JOIN `users` ON `users`.`id` = `peminjaman`.`id_anggota`
+JOIN `buku` ON `buku`.`id_buku` = `peminjaman`.`id_buku`', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\PeminjamanModel.php(20): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\Peminjaman.php(20): App\Models\PeminjamanModel->getPeminjaman()
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Peminjaman->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peminjaman))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-17 08:03:28 --> Error: Class "App\Models\UserModel" not found
+[Method: GET, Route: peminjaman]
+in APPPATH\Controllers\Peminjaman.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Peminjaman->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-17 08:04:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-17 08:05:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-17 08:05:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

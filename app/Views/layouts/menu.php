@@ -18,6 +18,9 @@ Masuk sebagai: <b><?= session('nama'); ?> (<?= session('role'); ?>)</b>
         Setting
     </a><br>
      <a href="<?= base_url('/buku') ?>"> Buku </a><br>
+      <a href="<?= base_url('peminjaman'); ?>" class="nav-link">
+    <i class="fas fa-book-reader"></i> <span>Data Peminjaman</span>
+</a>
     <li>
         <a href="<?= base_url('/logout') ?>">Log Out</a>
     </li>
