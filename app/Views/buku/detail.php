@@ -1,56 +1,77 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
-<h3>Detail Buku</h3>
+<div class="container mt-4">
+    <h3>Detail Buku</h3>
+    <hr>
 
-<table border="1">
-    <tr>
-        <td>ID</td>
-        <td><?= $buku['id_buku'] ?></td>
-    </tr>
-    <tr>
-        <td>Judul</td>
-        <td><?= $buku['judul'] ?></td>
-    </tr>
-    <tr>
-        <td>ISBN</td>
-        <td><?= $buku['isbn'] ?></td>
-    </tr>
-    <tr>
-        <td>Kategori</td>
-        <td><?= $buku['nama_kategori'] ?></td>
-    </tr>
-    <tr>
-        <td>Penulis</td>
-        <td><?= $buku['nama_penulis'] ?></td>
-    </tr>
-    <tr>
-        <td>Penerbit</td>
-        <td><?= $buku['nama_penerbit'] ?></td>
-    </tr>
-    <tr>
-        <td>Rak</td>
-        <td><?= $buku['nama_rak'] ?> - <?= $buku['lokasi'] ?></td>
-    </tr>
-    <tr>
-        <td>Tahun</td>
-        <td><?= $buku['tahun_terbit'] ?></td>
-    </tr>
-    <tr>
-        <td>Jumlah</td>
-        <td><?= $buku['jumlah'] ?></td>
-    </tr>
-    <tr>
-        <td>Tersedia</td>
-        <td><?= $buku['tersedia'] ?></td>
-    </tr>
-    <tr>
-        <td>Deskripsi</td>
-        <td><?= $buku['deskripsi'] ?></td>
-    </tr>
-</table>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <?php 
+                        $namaFoto = !empty($buku['cover']) ? $buku['cover'] : 'default.jpg';
+                        $path = 'assets/img/buku/' . $namaFoto;
+                    ?>
+                    <img src="<?= base_url($path) ?>" class="img-fluid rounded shadow" alt="Cover Buku" style="max-height: 400px;">
+                </div>
+            </div>
+        </div>
 
-<br>
+        <div class="col-md-8">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th width="150">ID Buku</th>
+                    <td><?= $buku['id_buku'] ?></td>
+                </tr>
+                <tr>
+                    <th>Judul</th>
+                    <td><strong><?= $buku['judul'] ?></strong></td>
+                </tr>
+                <tr>
+                    <th>ISBN</th>
+                    <td><?= $buku['isbn'] ?></td>
+                </tr>
+                <tr>
+                    <th>Kategori</th>
+                    <td><?= $buku['nama_kategori'] ?? '-' ?></td>
+                </tr>
+                <tr>
+                    <th>Penulis</th>
+                    <td><?= $buku['nama_penulis'] ?? '-' ?></td>
+                </tr>
+                <tr>
+                    <th>Penerbit</th>
+                    <td><?= $buku['nama_penerbit'] ?? '-' ?></td>
+                </tr>
+                <tr>
+                    <th>Lokasi Rak</th>
+                    <td>
+                        <span class="badge bg-info text-dark">
+                            <?= ($buku['nama_rak'] ?? '-') . " ( " . ($buku['lokasi'] ?? '-') . " )" ?>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Tahun Terbit</th>
+                    <td><?= $buku['tahun_terbit'] ?></td>
+                </tr>
+                <tr>
+                    <th>Stok</th>
+                    <td>Tersedia: <?= $buku['tersedia'] ?> / Total: <?= $buku['jumlah'] ?></td>
+                </tr>
+                <tr>
+                    <th>Deskripsi</th>
+                    <td><?= nl2br($buku['deskripsi']) ?></td>
+                </tr>
+            </table>
 
-<a href="<?= base_url('buku') ?>">Kembali</a>
-<a href="<?= base_url('buku/wa/' . $buku['id_buku']) ?>" target="_blank">Kirim WA</a>
+            <div class="mt-3">
+                <a href="<?= base_url('buku') ?>" class="btn btn-secondary">Kembali</a>
+                <a href="<?= base_url('buku/wa/' . $buku['id_buku']) ?>" target="_blank" class="btn btn-success">
+                    <i class="fab fa-whatsapp"></i> Kirim WA
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 <?= $this->endSection() ?>

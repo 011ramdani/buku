@@ -1,87 +1,79 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
 
-<div>
-    <h3>Data Users</h3>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-dark mb-0">Manajemen Users</h4>
+            <p class="text-muted small">Kelola data petugas dan administrator sistem</p>
+        </div>
+        <a href="<?= base_url('users/create') ?>" class="btn btn-primary shadow-sm">
+            <i class="bi bi-person-plus-fill me-2"></i> Tambah User
+        </a>
+    </div>
 
-    <form method="get" action="">
-        <input type="text" name="keyword" placeholder="Cari nama..." value="<?= $_GET['keyword'] ?? '' ?>">
-
-        <select name="role">
-            <option value="">-- Semua Role --</option>
-            <option value="admin" <?= (($_GET['role'] ?? '') == 'admin') ? 'selected' : '' ?>>Admin</option>
-            <option value="petugas" <?= (($_GET['role'] ?? '') == 'petugas') ? 'selected' : '' ?>>Petugas</option>
-            <option value="anggota" <?= (($_GET['role'] ?? '') == 'anggota') ? 'selected' : '' ?>>Anggota</option>
-        </select>
-
-        <button type="submit">Cari</button>
-        <a href="<?= base_url('users') ?>">Reset</a>
-        <a href="<?= base_url('users/print?' . http_build_query($_GET)) ?>" target="_blank">Print</a>
-    </form>
-
-    <br>
-
-    <?php if (session()->getFlashdata('success')): ?>
-        <div style="color: green;"><?= session()->getFlashdata('success') ?></div>
-    <?php endif; ?>
-
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Foto</th>
-                <?php if (session()->get('role') == 'admin') : ?>
-                    <th>Aksi</th>
-                <?php endif; ?>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php if (!empty($users)): ?>
-                <?php 
-                    // Inisialisasi nomor
-                    $no = 1; 
-                    if (isset($pager)) {
-                        $no = 1 + (10 * ($pager->getCurrentPage() - 1));
-                    }
-                ?>
-                <?php foreach ($users as $u): ?>
-                    <tr>
-                        <td><?= $no++ ?></td>
-                        <td><?= $u['nama'] ?></td>
-                        <td><?= $u['email'] ?></td>
-                        <td><?= $u['username'] ?></td>
-                        <td><?= ucfirst($u['role']) ?></td>
-                        <td>
-                            <?php if (!empty($u['foto'])): ?>
-                                <img src="<?= base_url('uploads/users/' . $u['foto']) ?>" width="60">
-                            <?php else: ?>
-                                -
-                            <?php endif; ?>
-                        </td>
-
-                        <?php if (session()->get('role') == 'admin') : ?>
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0"> <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4 py-3 text-uppercase small fw-bold" width="50">No</th>
+                            <th class="py-3 text-uppercase small fw-bold">User</th>
+                            <th class="py-3 text-uppercase small fw-bold">Username</th>
+                            <th class="py-3 text-uppercase small fw-bold text-center">Role</th>
+                            <th class="py-3 text-uppercase small fw-bold text-center pe-4" width="150">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; foreach ($users as $u) : ?>
+                        <tr>
+                            <td class="ps-4 fw-bold text-muted"><?= $i++; ?></td>
                             <td>
-                                <a href="<?= base_url('users/detail/' . $u['id']) ?>">Detail</a>
-                                <a href="<?= base_url('users/edit/' . $u['id']) ?>">Edit</a>
-                                <a href="<?= base_url('users/wa/' . $u['id']) ?>" target="_blank">Kirim WA</a>
-                                <a href="<?= base_url('users/delete/' . $u['id']) ?>"
-                                   onclick="return confirm('Hapus user ini?')">Hapus</a>
+                                <div class="d-flex align-items-center">
+                                    <img src="<?= base_url('uploads/users/' . $u['foto']) ?>" 
+                                         class="rounded-circle border me-3 object-fit-cover" 
+                                         width="40" height="40">
+                                    <div>
+                                        <div class="fw-bold"><?= $u['nama']; ?></div>
+                                        <div class="text-muted small"><?= $u['email']; ?></div>
+                                    </div>
+                                </div>
                             </td>
-                        <?php endif; ?>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="7" align="center">Belum ada data user</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+                            <td><code class="text-primary"><?= $u['username']; ?></code></td>
+                            <td class="text-center">
+                                <span class="badge <?= $u['role'] == 'Admin' ? 'bg-primary' : 'bg-info text-white' ?> rounded-pill px-3">
+                                    <?= $u['role']; ?>
+                                </span>
+                            </td>
+                            <td class="text-center pe-4">
+                                <div class="btn-group shadow-sm">
+                                    <a href="<?= base_url('users/edit/' . $u['id']) ?>" class="btn btn-sm btn-outline-info" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="<?= base_url('users/delete/' . $u['id']) ?>" 
+                                       class="btn btn-sm btn-outline-danger" 
+                                       onclick="return confirm('Hapus user ini?')" title="Hapus">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    /* Tambahan dikit biar foto di tabel nggak gepeng */
+    .object-fit-cover {
+        object-fit: cover;
+    }
+    .table thead th {
+        border-bottom: 1px solid #eee;
+    }
+</style>
 
 <?= $this->endSection() ?>

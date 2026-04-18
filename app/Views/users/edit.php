@@ -1,62 +1,64 @@
-<?= $this->extend('layouts/main') ?>
-<?= $this->section('content') ?>
+<?= $this->extend('layouts/main') ?> <?= $this->section('content') ?>
 
-<div>
-    <div>
-        <div>
-            <h4>Edit User</h4>
-        </div>
-
-        <div>
-
-            <form action="<?= base_url('users/update/' . $user['id']) ?>" method="post" enctype="multipart/form-data">
-
-                <div>
-                    <label>Nama Lengkap</label><br>
-                    <input type="text" name="nama" value="<?= $user['nama'] ?>" required>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-lg-6"> <div class="card shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-person-gear me-2"></i>Edit Profile User</h5>
                 </div>
+                <div class="card-body p-4">
+                    
+                    <form action="<?= base_url('users/update/' . $user['id']) ?>" method="post" enctype="multipart/form-data">
+                        <?= csrf_field(); ?>
 
-                <div>
-                    <label>Email</label><br>
-                    <input type="text" name="email" value="<?= $user['email'] ?>" required>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nama Lengkap</label>
+                            <input type="text" name="nama" class="form-control" value="<?= $user['nama'] ?>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Email</label>
+                            <input type="email" name="email" class="form-control" value="<?= $user['email'] ?>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Username</label>
+                            <input type="text" name="username" class="form-control" value="<?= $user['username'] ?>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Kosongkan jika tidak diubah">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Role</label>
+                            <select name="role" class="form-select">
+                                <option value="Admin" <?= $user['role'] == 'Admin' ? 'selected' : '' ?>>Admin</option>
+                                <option value="Petugas" <?= $user['role'] == 'Petugas' ? 'selected' : '' ?>>Petugas</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Foto Profil</label>
+                            <input type="file" name="foto" class="form-control mb-2">
+                            <div class="text-muted small">Foto saat ini:</div>
+                            <img src="<?= base_url('uploads/users/' . $user['foto']) ?>" width="100" class="rounded border mt-2">
+                        </div>
+
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <a href="<?= base_url('users') ?>" class="btn btn-secondary px-4">
+                                <i class="bi bi-arrow-left me-1"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-save me-1"></i> Update Data
+                            </button>
+                        </div>
+                    </form>
+
                 </div>
-
-                <div>
-                    <label>Username</label><br>
-                    <input type="text" name="username" value="<?= $user['username'] ?>" required>
-                </div>
-
-                <div>
-                    <label>Password (kosongkan jika tidak diubah)</label><br>
-                    <input type="password" name="password">
-                </div>
-
-                <div>
-                    <label>Role</label><br>
-                    <select name="role">
-                        <option value="admin" <?= $user['role'] == 'admin' ? 'selected' : '' ?>>Admin</option>
-                        <option value="petugas" <?= $user['role'] == 'petugas' ? 'selected' : '' ?>>Petugas</option>
-                        <option value="anggota" <?= $user['role'] == 'anggota' ? 'selected' : '' ?>>Anggota</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Foto</label><br>
-                    <input type="file" name="foto"><br>
-                    <p>Foto sekarang:</p>
-
-                    <?php if ($user['foto']): ?>
-                        <img src="<?= base_url('uploads/users/' . $user['foto']) ?>" width="80">
-                    <?php else: ?>
-                        <span>-</span>
-                    <?php endif; ?>
-                </div>
-
-                <br>
-                <button type="submit">Update</button>
-                <a href="<?= base_url('users') ?>">Kembali</a>
-
-            </form>
+            </div>
         </div>
     </div>
 </div>

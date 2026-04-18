@@ -29,41 +29,33 @@ class Users extends BaseController
         return view('users/create');
     }
 
-    public function store()
-    {
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'nama'     => 'required',
-            'email'    => 'permit_empty|valid_email',
-            'username' => 'required|is_unique[tb_users.username]', 
-            'password' => 'required|min_length[4]',
-            'role'     => 'required',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run()) {
-            return redirect()->back()->withInput()->with('error', implode('<br>', $validation->getErrors()));
-        }
-
-        $foto = $this->request->getFile('foto');
-        $namaFoto = 'default.png'; 
-
-        if ($foto && $foto->isValid() && !$foto->hasMoved()) {
-            $namaFoto = $foto->getRandomName();
-            $foto->move(FCPATH . 'uploads/users', $namaFoto);
-        }
-
-        $this->users->save([
-            'nama'     => $this->request->getPost('nama'),
-            'email'    => $this->request->getPost('email'),
-            'username' => $this->request->getPost('username'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-            'role'     => $this->request->getPost('role'),
-            'foto'     => $namaFoto
-        ]);
-
-        return redirect()->to('/users')->with('success', 'User berhasil ditambahkan!');
+   public function store()
+{
+    // 1. Ambil file foto
+    $fileFoto = $this->request->getFile('foto');
+    
+    // 2. Cek apakah ada foto yang diupload, kalau nggak ada pakai default
+    if ($fileFoto && $fileFoto->isValid() && !$fileFoto->hasMoved()) {
+        $namaFoto = $fileFoto->getRandomName();
+        $fileFoto->move('uploads/users', $namaFoto);
+    } else {
+        $namaFoto = 'default.png'; // Pastikan file default.png ada di folder
     }
 
+    // 3. Koneksi database dan simpan
+    $this->db = \Config\Database::connect();
+    $this->db->table('users')->insert([
+        'nama'     => $this->request->getPost('nama'),
+        'email'    => $this->request->getPost('email'),
+        'username' => $this->request->getPost('username'),
+        'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+        'role'     => $this->request->getPost('role'),
+        'foto'     => $namaFoto
+    ]);
+
+    // 4. Balik ke halaman daftar user
+    return redirect()->to('/users')->with('success', 'User baru berhasil ditambah!');
+}
     public function edit($id)
     {
         $userData = $this->users->find($id);

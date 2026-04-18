@@ -49,3 +49,16 @@ $routes->get('peminjaman/edit/(:num)', 'Peminjaman::edit/$1');
 $routes->post('peminjaman/update/(:num)', 'Peminjaman::update/$1');
 $routes->delete('peminjaman/delete/(:num)', 'Peminjaman::delete/$1'); // Ubah jadi delete
 $routes->get('peminjaman/detail/(:num)', 'Peminjaman::detail/$1');
+$routes->get('peminjaman/kembalikan/(:num)', 'Peminjaman::kembalikan/$1');
+$routes->get('peminjaman/list_denda', 'Peminjaman::list_denda');
+$routes->get('peminjaman/bayar_denda/(:num)', 'Peminjaman::bayar_denda/$1');
+$routes->get('peminjaman/delete_denda/(:num)', 'Peminjaman::delete_denda/$1');
+$routes->get('peminjaman/konfirmasi_bayar/(:num)', 'Peminjaman::konfirmasi_bayar/$1');
+
+
+$routes->get('anggota', 'Anggota::index');
+$routes->get('anggota/create', 'Anggota::create');
+$routes->post('anggota/save', 'Anggota::save');
+$routes->get('anggota/edit/(:num)', 'Anggota::edit/$1');
+$routes->post('anggota/update/(:num)', 'Anggota::update/$1');
+$routes->get('anggota/delete/(:num)', 'Anggota::delete/$1');
