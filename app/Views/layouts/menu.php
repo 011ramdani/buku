@@ -26,32 +26,35 @@
             </a>
         </li>
 
-        <?php if (session()->get('role') == 'admin' || session()->get('role') == 'petugas') : ?>
-        <li>
-            <a href="<?= base_url('/users') ?>" class="nav-link text-white <?= (uri_string() == 'users') ? 'active' : '' ?>">
-                <i class="bi bi-people me-2"></i> Users
-            </a>
-        </li>
-        <?php endif; ?>
-
         <li>
             <a href="<?= base_url('/buku') ?>" class="nav-link text-white <?= (uri_string() == 'buku') ? 'active' : '' ?>">
                 <i class="bi bi-journals me-2"></i> Koleksi Buku
             </a>
         </li>
-        
-        <li>
-            <a href="<?= base_url('peminjaman') ?>" class="nav-link text-white <?= (uri_string() == 'peminjaman') ? 'active' : '' ?>">
-                <i class="bi bi-arrow-left-right me-2"></i> Peminjaman
-            </a>
-        </li>
 
-        <li>
-            <a href="<?= base_url('peminjaman/list_denda') ?>" class="nav-link text-white <?= (uri_string() == 'peminjaman/list_denda') ? 'active' : '' ?>">
-                <i class="bi bi-cash-stack me-2 text-warning"></i> Data Denda
-            </a>
-        </li>
-    </ul>
+        <?php if (session()->get('role') == 'admin' || session()->get('role') == 'petugas') : ?>
+            <hr class="border-secondary my-2">
+            <small class="text-muted text-uppercase ms-3" style="font-size: 0.6rem;">Manajemen Data</small>
+            
+            <li>
+                <a href="<?= base_url('/users') ?>" class="nav-link text-white <?= (uri_string() == 'users') ? 'active' : '' ?>">
+                    <i class="bi bi-people me-2"></i> Users
+                </a>
+            </li>
+
+            <li>
+                <a href="<?= base_url('peminjaman') ?>" class="nav-link text-white <?= (uri_string() == 'peminjaman') ? 'active' : '' ?>">
+                    <i class="bi bi-arrow-left-right me-2"></i> Peminjaman
+                </a>
+            </li>
+
+            <li>
+                <a href="<?= base_url('peminjaman/list_denda') ?>" class="nav-link text-white <?= (uri_string() == 'peminjaman/list_denda') ? 'active' : '' ?>">
+                    <i class="bi bi-cash-stack me-2 text-warning"></i> Data Denda
+                </a>
+            </li>
+        <?php endif; ?>
+        </ul>
 
     <hr class="border-secondary">
 
@@ -71,14 +74,13 @@
 
 <style>
     body {
-        /* Memberi jarak di kiri badan halaman agar konten tidak tertutup sidebar */
         padding-left: 250px; 
     }
 
     .sidebar-dadan {
         width: 250px;
         height: 100vh;
-        position: fixed; /* Mengunci menu di kiri */
+        position: fixed; 
         top: 0;
         left: 0;
         z-index: 1000;
@@ -105,7 +107,6 @@
         object-fit: cover;
     }
 
-    /* Memperbaiki tampilan saat dibuka di HP */
     @media (max-width: 768px) {
         body { padding-left: 0; }
         .sidebar-dadan { position: relative; width: 100%; height: auto; }

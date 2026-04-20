@@ -9,11 +9,27 @@
         </ol>
     </nav>
 
+    <?php if (session()->getFlashdata('success')) : ?>
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-check-circle me-2"></i> <?= session()->getFlashdata('success'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('error')) : ?>
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i> <?= session()->getFlashdata('error'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
     <div class="row align-items-center mb-4">
         <div class="col-md-6">
             <h4 class="fw-bold text-dark mb-0">Manajemen Koleksi Buku</h4>
             <p class="text-muted small mb-0">Kelola data buku perpustakaan <strong>Maldin17App</strong>.</p>
         </div>
+        
+        <?php if (session()->get('role') != 'anggota') : ?>
         <div class="col-md-6 text-md-end mt-3 mt-md-0">
             <div class="btn-group shadow-sm">
                 <a href="<?= base_url('buku/create') ?>" class="btn btn-primary">
@@ -24,6 +40,7 @@
                 </a>
             </div>
         </div>
+        <?php endif; ?>
     </div>
 
     <div class="row mb-4">
@@ -88,8 +105,18 @@
                             <td class="text-center pe-4">
                                 <div class="btn-group shadow-sm border rounded overflow-hidden" role="group">
                                     <a href="<?= base_url('buku/detail/' . $b['id_buku']) ?>" class="btn btn-sm btn-white text-info" title="Detail"><i class="bi bi-eye"></i></a>
-                                    <a href="<?= base_url('buku/edit/' . $b['id_buku']) ?>" class="btn btn-sm btn-white text-warning" title="Edit"><i class="bi bi-pencil-square"></i></a>
-                                    <a href="<?= base_url('buku/delete/' . $b['id_buku']) ?>" class="btn btn-sm btn-white text-danger" onclick="return confirm('Yakin ingin menghapus buku ini?')" title="Hapus"><i class="bi bi-trash"></i></a>
+                                    
+                                    <?php if (session()->get('role') == 'anggota' && $b['tersedia'] > 0) : ?>
+                                        <a href="<?= base_url('peminjaman/ajukan/' . $b['id_buku']) ?>" class="btn btn-sm btn-white text-primary fw-bold" onclick="return confirm('Ajukan peminjaman buku ini?')" title="Pinjam">
+                                            <i class="bi bi-hand-index-thumb"></i> Pinjam
+                                        </a>
+                                    <?php endif; ?>
+
+                                    <?php if (session()->get('role') != 'anggota') : ?>
+                                        <a href="<?= base_url('buku/edit/' . $b['id_buku']) ?>" class="btn btn-sm btn-white text-warning" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="<?= base_url('buku/delete/' . $b['id_buku']) ?>" class="btn btn-sm btn-white text-danger" onclick="return confirm('Yakin ingin menghapus buku ini?')" title="Hapus"><i class="bi bi-trash"></i></a>
+                                    <?php endif; ?>
+
                                     <a href="<?= base_url('buku/wa/' . $b['id_buku']) ?>" target="_blank" class="btn btn-sm btn-white text-success" title="WA Admin"><i class="bi bi-whatsapp"></i></a>
                                 </div>
                             </td>

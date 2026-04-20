@@ -173,4 +173,21 @@ class Buku extends BaseController
 
     return view('buku/detail', $data);
 }
+public function wa($id)
+{
+    $model = new \App\Models\BukuModel(); // Pastikan nama model sesuai
+    $buku = $model->find($id);
+
+    if ($buku) {
+        $nomor_admin = "628xxxxxxxxxx"; // <--- Ganti pakai nomor WA Abang (awali dengan 62)
+        $pesan = "Halo Admin Maldin17 Library, saya mau tanya tentang buku: " . $buku['judul'] . " (ISBN: " . $buku['isbn'] . ")";
+        
+        // Encode pesan agar bisa dibaca URL
+        $url = "https://wa.me/" . $nomor_admin . "?text=" . urlencode($pesan);
+        
+        return redirect()->to($url);
+    } else {
+        return redirect()->to('/buku')->with('error', 'Data buku tidak ditemukan.');
+    }
+}
 }

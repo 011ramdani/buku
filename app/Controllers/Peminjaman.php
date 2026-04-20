@@ -1,64 +1,133 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
 
 use App\Models\PeminjamanModel;
-use App\Models\BukuModel;
-use App\Models\UsersModel;
 use App\Models\AnggotaModel;
+use App\Models\BukuModel;
 
-class Peminjaman extends BaseController {
-    // 1. Deklarasi property secara formal
+class Peminjaman extends BaseController
+{
     protected $pinjam;
-    protected $buku;
-    protected $user;
     protected $anggota;
-    protected $db;
+    protected $buku;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->pinjam = new PeminjamanModel();
-        $this->buku = new BukuModel();
-        $this->user = new UsersModel();
         $this->anggota = new AnggotaModel();
-        // 2. Inisialisasi koneksi database
-        $this->db = \Config\Database::connect(); 
+        $this->buku = new BukuModel();
     }
 
-    public function index() {
+    public function index()
+    {
         $data = [
-            'title' => 'Data Peminjaman',
             'peminjaman' => $this->pinjam->getPeminjaman()
         ];
         return view('peminjaman/index', $data);
     }
 
-    public function create() {
+    public function create()
+    {
         $data = [
-            'title'   => 'Tambah Peminjaman',
             'anggota' => $this->anggota->findAll(),
-            'buku'    => $this->buku->where('tersedia >', 0)->findAll()
+            'buku'    => $this->buku->findAll()
         ];
         return view('peminjaman/create', $data);
     }
 
-    public function store() {
-        $id_buku = $this->request->getPost('id_buku');
-        $this->pinjam->save([
+    public function store()
+    {
+        $data = [
             'id_anggota'      => $this->request->getPost('id_anggota'),
-            'id_buku'         => $id_buku,
-            'id_petugas'      => session()->get('id'),
-            'tanggal_pinjam'  => date('Y-m-d'),
+            'id_buku'         => $this->request->getPost('id_buku'),
+            'id_petugas'      => session()->get('id_user') ?? 1,
+            'tanggal_pinjam'  => $this->request->getPost('tanggal_pinjam'),
             'tanggal_kembali' => $this->request->getPost('tanggal_kembali'),
+            'status'          => 'di pinjam',
+        ];
+
+        $this->pinjam->insert($data);
+        return redirect()->to('/peminjaman')->with('success', 'Data Berhasil Ditambah!');
+    }
+
+    public function kembalikan($id_peminjaman)
+    {
+        $pinjam = $this->pinjam->find($id_peminjaman);
+        $id_buku = $pinjam['id_buku'];
+        
+        // Update stok buku
+        $bukuSekarang = $this->buku->find($id_buku);
+        $this->buku->update($id_buku, ['tersedia' => $bukuSekarang['tersedia'] + 1]);
+
+        $tgl_deadline = new \DateTime($pinjam['tanggal_kembali']);
+        $tgl_sekarang = new \DateTime(date('Y-m-d'));
+        
+        $pesan = "Buku kembali tepat waktu.";
+
+        if ($tgl_sekarang > $tgl_deadline) {
+            $selisih = $tgl_sekarang->diff($tgl_deadline);
+            $total_denda = $selisih->days * 1000;
+
+            // FIX: Panggil koneksi DB
+            $db = \Config\Database::connect();
+            
+            $db->table('denda')->insert([
+                'id_pengembalian' => $id_peminjaman, // FIX: Pakai variabel yang benar
+                'jumlah_denda'    => $total_denda,
+                'status'          => 'belum bayar'
+            ]);
+            $pesan = "Buku kembali. Denda: Rp " . number_format($total_denda);
+        }
+
+        $this->pinjam->update($id_peminjaman, ['status' => 'di kembalikan']);
+        return redirect()->to('/peminjaman')->with('success', $pesan);
+    }
+
+    public function ajukan($id_buku)
+    {
+        if (session()->get('role') !== 'anggota') {
+            return redirect()->to('/buku')->with('error', 'Hanya anggota yang bisa mengajukan.');
+        }
+
+        $id_anggota = session()->get('id_anggota');
+        $buku = $this->buku->find($id_buku);
+
+        if ($buku['tersedia'] <= 0) {
+            return redirect()->to('/buku')->with('error', 'Maaf, stok buku sedang habis.');
+        }
+
+        $this->pinjam->save([
+            'id_buku'         => $id_buku,
+            'id_anggota'      => $id_anggota,
+            'tanggal_pinjam'  => date('Y-m-d'),
+            'tanggal_kembali' => date('Y-m-d', strtotime('+7 days')),
+            'status'          => 'diajukan'
+        ]);
+
+        return redirect()->to('/buku')->with('success', 'Berhasil mengajukan!');
+    }
+
+    public function setujui($id)
+    {
+        $dataPinjam = $this->pinjam->find($id);
+        $id_buku = $dataPinjam['id_buku'];
+
+        $this->pinjam->update($id, [
+            'tanggal_pinjam'  => date('Y-m-d'),
+            'tanggal_kembali' => date('Y-m-d', strtotime('+7 days')),
             'status'          => 'di pinjam'
         ]);
 
         $buku = $this->buku->find($id_buku);
         $this->buku->update($id_buku, ['tersedia' => $buku['tersedia'] - 1]);
 
-        return redirect()->to('/peminjaman')->with('success', 'Data berhasil dipinjam');
+        return redirect()->to('/peminjaman')->with('success', 'Pinjaman disetujui!');
     }
 
-    public function edit($id) {
+    public function edit($id = null)
+    {
         $data = [
-            'title'   => 'Edit Peminjaman',
             'pinjam'  => $this->pinjam->find($id),
             'anggota' => $this->anggota->findAll(),
             'buku'    => $this->buku->findAll()
@@ -66,107 +135,66 @@ class Peminjaman extends BaseController {
         return view('peminjaman/edit', $data);
     }
 
-    public function update($id) {
-        $dataLama = $this->pinjam->find($id);
-        $statusBaru = $this->request->getPost('status');
-        $id_buku = $dataLama['id_buku'];
-
-        if ($dataLama['status'] == 'di pinjam' && $statusBaru == 'di kembalikan') {
-            $buku = $this->buku->find($id_buku);
-            $this->buku->update($id_buku, ['tersedia' => $buku['tersedia'] + 1]);
-        } 
-        elseif ($dataLama['status'] == 'di kembalikan' && $statusBaru == 'di pinjam') {
-            $buku = $this->buku->find($id_buku);
-            $this->buku->update($id_buku, ['tersedia' => $buku['tersedia'] - 1]);
-        }
-
-        $this->pinjam->update($id, [
+    public function update($id = null)
+    {
+        $id_final = $id ?: $this->request->getPost('id_peminjaman');
+        $data = [
             'id_anggota'      => $this->request->getPost('id_anggota'),
             'id_buku'         => $this->request->getPost('id_buku'),
+            'tanggal_pinjam'  => $this->request->getPost('tanggal_pinjam'),
             'tanggal_kembali' => $this->request->getPost('tanggal_kembali'),
-            'status'          => $statusBaru
-        ]);
-
-        return redirect()->to('/peminjaman')->with('success', 'Status diperbarui!');
-    }
-
-    public function kembalikan($id_peminjaman)
-    {
-        $pinjam = $this->db->table('peminjaman')->where('id_peminjaman', $id_peminjaman)->get()->getRowArray();
-        
-        $id_buku = $pinjam['id_buku'];
-        $buku = $this->buku->find($id_buku);
-        $this->buku->update($id_buku, ['tersedia' => $buku['tersedia'] + 1]);
-
-        $tgl_deadline = new \DateTime($pinjam['tanggal_kembali']);
-        $tgl_sekarang = new \DateTime(date('Y-m-d'));
-        
-        if ($tgl_sekarang > $tgl_deadline) {
-            $selisih = $tgl_sekarang->diff($tgl_deadline);
-            $hari_terlambat = $selisih->days;
-            $total_denda = $hari_terlambat * 1000;
-
-            // 3. Pastikan status 'belum bayar' (sudah sinkron dengan View)
-           $this->db->table('denda')->insert([
-    'id_pengembalian' => $id_peminjaman,
-    'jumlah_denda'    => $total_denda,
-    'status'          => 'belum bayar' // Pastikan tidak ada kata "denda" di sini
-]);
-            
-            $pesan = "Buku kembali. Terlambat $hari_terlambat hari, denda Rp " . number_format($total_denda);
-        } else {
-            $pesan = "Buku kembali tepat waktu.";
-        }
-
-        $this->db->table('peminjaman')->where('id_peminjaman', $id_peminjaman)->update([
-            'status' => 'di kembalikan'
-        ]);
-
-        return redirect()->to('/peminjaman')->with('success', $pesan);
-    }
-
-    public function list_denda()
-    {
-        $keyword = $this->request->getGet('keyword');
-        $builder = $this->db->table('denda')
-            ->select('denda.*, buku.judul, anggota.nama_anggota')
-            ->join('peminjaman', 'peminjaman.id_peminjaman = denda.id_pengembalian')
-            ->join('buku', 'buku.id_buku = peminjaman.id_buku')
-            ->join('anggota', 'anggota.id_anggota = peminjaman.id_anggota');
-
-        if ($keyword) {
-            $builder->groupStart()
-                    ->like('anggota.nama_anggota', $keyword)
-                    ->orLike('buku.judul', $keyword)
-                    ->groupEnd();
-        }
-
-        $data = [
-            'title' => 'Data Denda',
-            'denda' => $builder->get()->getResultArray()
+            'status'          => $this->request->getPost('status'),
         ];
-        return view('peminjaman/denda', $data);
+
+        $db = \Config\Database::connect();
+        if ($db->table('peminjaman')->where('id_peminjaman', $id_final)->update($data)) {
+            return redirect()->to('/peminjaman')->with('success', 'Berhasil update!');
+        }
+        return redirect()->back()->with('error', 'Gagal update!');
     }
 
-    public function konfirmasi_bayar($id_denda)
+    public function delete($id = null)
     {
-        // 4. Update status jadi 'lunas' (sinkron dengan View)
-        $this->db->table('denda')->where('id_denda', $id_denda)->update([
-            'status' => 'lunas',
-            'tgl_pembayaran' => date('Y-m-d H:i:s')
-        ]);
+        $db = \Config\Database::connect();
+        $db->table('peminjaman')->where('id_peminjaman', $id)->delete();
+        return redirect()->to('/peminjaman')->with('success', 'Berhasil hapus data!');
+    }
+    public function list_denda()
+{
+    $db = \Config\Database::connect();
+    
+    // Ambil keyword kalau ada pencarian
+    $keyword = $this->request->getGet('keyword');
+    $builder = $db->table('denda')
+        ->join('peminjaman', 'peminjaman.id_peminjaman = denda.id_pengembalian')
+        ->join('anggota', 'anggota.id_anggota = peminjaman.id_anggota')
+        ->join('buku', 'buku.id_buku = peminjaman.id_buku')
+        ->select('denda.*, anggota.nama_anggota, buku.judul');
 
-        return redirect()->back()->with('success', 'Denda berhasil diverifikasi Admin!');
+    if ($keyword) {
+        $builder->like('anggota.nama_anggota', $keyword)
+                ->orLike('buku.judul', $keyword);
     }
 
-    public function delete_denda($id)
-    {
-        $this->db->table('denda')->where('id_denda', $id)->delete();
-        return redirect()->back()->with('success', 'Riwayat denda dihapus!');
-    }
+    $data['denda'] = $builder->get()->getResultArray();
 
-    public function delete($id) {
-        $this->pinjam->delete($id);
-        return redirect()->to('/peminjaman')->with('success', 'Data dihapus');
-    }
+    // Pastikan nama file view-nya benar (misal: denda.php atau list_denda.php)
+    return view('peminjaman/denda', $data); 
+}
+
+public function konfirmasi_bayar($id)
+{
+    $db = \Config\Database::connect();
+    $db->table('denda')->where('id_denda', $id)->update(['status' => 'lunas']);
+    
+    return redirect()->back()->with('success', 'Pembayaran denda berhasil diverifikasi!');
+}
+
+public function delete_denda($id)
+{
+    $db = \Config\Database::connect();
+    $db->table('denda')->where('id_denda', $id)->delete();
+    
+    return redirect()->back()->with('success', 'Riwayat denda berhasil dihapus!');
+}
 }

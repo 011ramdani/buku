@@ -24,16 +24,38 @@ class Anggota extends BaseController
         return view('anggota/create', ['title' => 'Tambah Anggota']);
     }
 
-    public function save() {
-        $this->anggotaModel->save([
-            'nis'          => $this->request->getPost('nis'),
-            'nama_anggota' => $this->request->getPost('nama_anggota'),
-            'alamat'       => $this->request->getPost('alamat'),
-            'no_hp'        => $this->request->getPost('no_hp'),
-            'tanggal_daftar' => date('Y-m-d')
-        ]);
-        return redirect()->to('/anggota');
-    }
+    public function save()
+{
+    $usersModel = new \App\Models\UsersModel();
+    $anggotaModel = new \App\Models\AnggotaModel();
+
+    // 1. DAFTARKAN KE TABEL USERS DULU
+    $userData = [
+        'username' => $this->request->getPost('nis'), // Kita pakai NIS buat username biar gampang
+        'password' => password_hash('12345', PASSWORD_DEFAULT), // Password default semua anggota
+        'role'     => 'anggota',
+        'nama'     => $this->request->getPost('nama_anggota'),
+        'foto'     => 'default.png'
+    ];
+    
+    $usersModel->insert($userData);
+    
+    // 2. AMBIL ID USER YANG BARU SAJA DIBUAT TADI
+    $newUserId = $usersModel->insertID(); 
+
+    // 3. MASUKKAN KE TABEL ANGGOTA DENGAN USER_ID OTOMATIS
+    $anggotaData = [
+        'user_id'      => $newUserId, // <--- INI DIA OTOMATISNYA!
+        'nis'          => $this->request->getPost('nis'),
+        'nama_anggota' => $this->request->getPost('nama_anggota'),
+        'alamat'       => $this->request->getPost('alamat'),
+        'no_hp'        => $this->request->getPost('no_hp'),
+    ];
+
+    $anggotaModel->insert($anggotaData);
+
+    return redirect()->to('/anggota')->with('pesan', 'Data Berhasil Ditambah & Akun Login Otomatis Dibuat!');
+}
 
     public function edit($id) {
         $data = [

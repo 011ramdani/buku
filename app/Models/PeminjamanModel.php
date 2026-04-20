@@ -8,13 +8,18 @@ class PeminjamanModel extends Model
 {
     protected $table      = 'peminjaman';
     protected $primaryKey = 'id_peminjaman';
-    protected $allowedFields = ['id_anggota', 'id_buku', 'id_petugas', 'tanggal_pinjam', 'tanggal_kembali', 'status'];
+    protected $allowedFields = [
+        'id_anggota', 'id_buku', 'id_petugas', 
+        'tanggal_pinjam', 'tanggal_kembali', 'status'
+    ];
 
-public function getPeminjaman()
+  public function getPeminjaman()
 {
-    return $this->select('peminjaman.*, anggota.nama_anggota, buku.judul')
-                ->join('anggota', 'anggota.id_anggota = peminjaman.id_anggota', 'left') 
-                ->join('buku', 'buku.id_buku = peminjaman.id_buku', 'left')
-                ->findAll();
+    return $this->db->table('peminjaman')
+        ->join('anggota', 'anggota.id_anggota = peminjaman.id_anggota')
+        ->join('buku', 'buku.id_buku = peminjaman.id_buku')
+        ->select('peminjaman.*, anggota.nama_anggota, buku.judul')
+        // Hapus orderBy yang spesifik id_pengembalian karena bikin error
+        ->get()->getResultArray();
 }
 }

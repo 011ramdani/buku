@@ -108,5 +108,15 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+    'role' => [
+        'before' => [
+            'users/*',
+            'buku/create',
+            'buku/edit/*',
+            'buku/delete/*',
+            // 'peminjaman' <-- Hapus/Komentari baris ini
+        ]
+    ],
+];
 }

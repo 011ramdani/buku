@@ -47,13 +47,19 @@ $routes->get('peminjaman/create', 'Peminjaman::create');
 $routes->post('peminjaman/store', 'Peminjaman::store');
 $routes->get('peminjaman/edit/(:num)', 'Peminjaman::edit/$1');
 $routes->post('peminjaman/update/(:num)', 'Peminjaman::update/$1');
-$routes->delete('peminjaman/delete/(:num)', 'Peminjaman::delete/$1'); // Ubah jadi delete
+$routes->get('peminjaman/delete/(:num)', 'Peminjaman::delete/$1');
 $routes->get('peminjaman/detail/(:num)', 'Peminjaman::detail/$1');
 $routes->get('peminjaman/kembalikan/(:num)', 'Peminjaman::kembalikan/$1');
 $routes->get('peminjaman/list_denda', 'Peminjaman::list_denda');
 $routes->get('peminjaman/bayar_denda/(:num)', 'Peminjaman::bayar_denda/$1');
 $routes->get('peminjaman/delete_denda/(:num)', 'Peminjaman::delete_denda/$1');
 $routes->get('peminjaman/konfirmasi_bayar/(:num)', 'Peminjaman::konfirmasi_bayar/$1');
+// Route untuk pengajuan pinjam oleh Anggota
+$routes->get('peminjaman/ajukan/(:num)', 'Peminjaman::ajukan/$1');
+
+// Route untuk persetujuan oleh Admin
+$routes->get('peminjaman/setujui/(:num)', 'Peminjaman::setujui/$1');
+$routes->get('peminjaman/tolak/(:num)', 'Peminjaman::tolak/$1');
 
 
 $routes->get('anggota', 'Anggota::index');

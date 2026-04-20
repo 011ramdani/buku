@@ -18,9 +18,12 @@
             <a href="<?= base_url('dashboard'); ?>" class="btn btn-outline-secondary shadow-sm">
                 <i class="bi bi-arrow-left me-1"></i> Dashboard
             </a>
-            <a href="<?= base_url('anggota/create'); ?>" class="btn btn-primary shadow-sm">
-                <i class="bi bi-person-plus-fill me-2"></i>Tambah Anggota
-            </a>
+            
+            <?php if (session()->get('role') != 'anggota') : ?>
+                <a href="<?= base_url('anggota/create'); ?>" class="btn btn-primary shadow-sm">
+                    <i class="bi bi-person-plus-fill me-2"></i>Tambah Anggota
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -35,7 +38,10 @@
                             <th class="py-3">Nama Lengkap</th>
                             <th class="py-3">No. WhatsApp</th>
                             <th class="py-3">Alamat</th>
-                            <th class="py-3 text-center" width="150">Aksi</th>
+                            
+                            <?php if (session()->get('role') != 'anggota') : ?>
+                                <th class="py-3 text-center" width="150">Aksi</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,25 +62,30 @@
                                     <?= $a['alamat']; ?>
                                 </span>
                             </td>
-                            <td class="text-center">
-                                <div class="btn-group" role="group">
-                                    <a href="<?= base_url('anggota/edit/' . $a['id_anggota']); ?>" class="btn btn-sm btn-outline-warning" title="Edit Data">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <a href="<?= base_url('anggota/delete/' . $a['id_anggota']); ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin ingin menghapus anggota ini?')" title="Hapus Data">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </div>
-                            </td>
+                            
+                            <?php if (session()->get('role') != 'anggota') : ?>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a href="<?= base_url('anggota/edit/' . $a['id_anggota']); ?>" class="btn btn-sm btn-outline-warning" title="Edit Data">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="<?= base_url('anggota/delete/' . $a['id_anggota']); ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin ingin menghapus anggota ini?')" title="Hapus Data">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            <?php endif; ?>
                         </tr>
                         <?php endforeach; ?>
                         
                         <?php if (empty($anggota)) : ?>
                         <tr>
-                            <td colspan="6" class="text-center py-5">
+                            <td colspan="<?= (session()->get('role') != 'anggota') ? '6' : '5'; ?>" class="text-center py-5">
                                 <i class="bi bi-people text-muted" style="font-size: 3rem;"></i>
                                 <p class="mt-2 text-muted">Belum ada data anggota terdaftar.</p>
-                                <a href="<?= base_url('anggota/create'); ?>" class="btn btn-sm btn-primary">Tambah Sekarang</a>
+                                <?php if (session()->get('role') != 'anggota') : ?>
+                                    <a href="<?= base_url('anggota/create'); ?>" class="btn btn-sm btn-primary">Tambah Sekarang</a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endif; ?>
