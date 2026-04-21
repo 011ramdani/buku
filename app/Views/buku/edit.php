@@ -71,7 +71,8 @@
                                         <label class="form-label fw-semibold">Lokasi Rak</label>
                                         <select name="id_rak" class="form-select rounded-3">
                                             <?php foreach ($rak as $r): ?>
-                                                <option value="<?= $r['id_rak'] ?>" <?= $buku['id_rak'] == $r['id_rak'] ? 'selected' : '' ?>>
+                                                <option value="<?= $r['id_rak'] ?>" 
+                                                    <?= (isset($current_rak['id_rak']) && $current_rak['id_rak'] == $r['id_rak']) ? 'selected' : '' ?>>
                                                     <?= $r['nama_rak'] ?> - <?= $r['lokasi'] ?>
                                                 </option>
                                             <?php endforeach; ?>
@@ -103,7 +104,12 @@
                             <div class="col-md-4 border-start ps-4">
                                 <label class="form-label fw-semibold d-block">Sampul Buku</label>
                                 <div class="mb-3">
-                                    <img src="<?= (!empty($buku['gambar']) && file_exists('assets/img/buku/' . $buku['gambar'])) ? base_url('assets/img/buku/' . $buku['gambar']) : base_url('assets/img/no-image.jpg') ?>" 
+                                    <?php 
+                                        // Cek apakah file gambar ada, jika tidak pakai default
+                                        $gambarPath = 'assets/img/buku/' . ($buku['cover'] ?? 'default.jpg');
+                                        $displayImg = (file_exists($gambarPath)) ? base_url($gambarPath) : base_url('assets/img/buku/default.jpg');
+                                    ?>
+                                    <img src="<?= $displayImg ?>" 
                                          class="img-thumbnail img-preview mb-2 shadow-sm" 
                                          style="width: 100%; max-width: 200px; height: 280px; object-fit: cover; border-radius: 10px;">
                                     
@@ -146,4 +152,4 @@ function previewImg() {
 }
 </script>
 
-<?= $this->endSection() ?>    
+<?= $this->endSection() ?>

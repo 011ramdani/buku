@@ -32,7 +32,6 @@ class Buku extends BaseController
         $keyword = $this->request->getGet('keyword');
         $builder = $this->db->table('buku');
         
-        // PENTING: Jika di View pakai $b['gambar'], maka kita alias-kan 'cover' AS 'gambar'
         $builder->select('buku.*, buku.cover as gambar, kategori.nama_kategori, penulis.nama_penulis, penerbit.nama_penerbit, rak.nama_rak, rak.lokasi');
         $builder->join('kategori', 'kategori.id_kategori = buku.id_kategori', 'left');
         $builder->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'left');
@@ -46,7 +45,20 @@ class Buku extends BaseController
         }
 
         $data['buku'] = $builder->get()->getResultArray();
+        $data['title'] = 'Daftar Buku';
         return view('buku/index', $data);
+    }
+
+    public function create()
+    {
+        $data = [
+            'title'    => 'Tambah Buku',
+            'kategori' => $this->kategoriModel->findAll(),
+            'penulis'  => $this->penulisModel->findAll(),
+            'penerbit' => $this->penerbitModel->findAll(),
+            'rak'      => $this->rakModel->findAll(),
+        ];
+        return view('buku/create', $data);
     }
 
     public function store()
@@ -79,6 +91,27 @@ class Buku extends BaseController
         ]);
 
         return redirect()->to('/buku')->with('success', 'Buku berhasil ditambah');
+    }
+
+    public function edit($id)
+    {
+        $data = [
+            'title'    => 'Edit Data Buku',
+            'buku'     => $this->bukuModel->find($id),
+            'kategori' => $this->kategoriModel->findAll(),
+            'penulis'  => $this->penulisModel->findAll(),
+            'penerbit' => $this->penerbitModel->findAll(),
+            'rak'      => $this->rakModel->findAll(),
+        ];
+
+        // Ambil ID rak saat ini
+        $data['current_rak'] = $this->db->table('buku_rak')->where('id_buku', $id)->get()->getRowArray();
+
+        if (empty($data['buku'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Data buku tidak ditemukan.');
+        }
+
+        return view('buku/edit', $data);
     }
 
     public function update($id)
@@ -117,10 +150,21 @@ class Buku extends BaseController
         return redirect()->to('/buku')->with('success', 'Data berhasil diupdate');
     }
 
+    public function delete($id)
+    {
+        $buku = $this->bukuModel->find($id);
+        if ($buku['cover'] != 'default.jpg' && file_exists('assets/img/buku/' . $buku['cover'])) {
+            unlink('assets/img/buku/' . $buku['cover']);
+        }
+        
+        $this->db->table('buku_rak')->where('id_buku', $id)->delete();
+        $this->bukuModel->delete($id);
+        return redirect()->to('/buku')->with('success', 'Buku berhasil dihapus!');
+    }
+
     public function detail($id)
     {
         $builder = $this->db->table('buku');
-        // Tambahkan alias cover AS gambar di sini juga
         $builder->select('buku.*, buku.cover as gambar, kategori.nama_kategori, penulis.nama_penulis, penerbit.nama_penerbit, rak.nama_rak, rak.lokasi');
         $builder->join('kategori', 'kategori.id_kategori = buku.id_kategori', 'left');
         $builder->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'left');
@@ -132,20 +176,4 @@ class Buku extends BaseController
         $data['buku'] = $builder->get()->getRowArray();
         return view('buku/detail', $data);
     }
-
-    public function wa($id)
-    {
-        $buku = $this->bukuModel->find($id);
-        if ($buku) {
-            $nomor_admin = "628123456789"; // Sesuaikan nomor WA Abang
-            $pesan = "Halo Admin Dadan Library, saya mau tanya tentang buku: " . $buku['judul'] . " (ISBN: " . $buku['isbn'] . ")";
-            return redirect()->to("https://wa.me/" . $nomor_admin . "?text=" . urlencode($pesan));
-        }
-        return redirect()->to('/buku')->with('error', 'Buku tidak ditemukan.');
-    }
-    
-    // Create, Edit, dan Delete tetap seperti punya Abang
-    public function create() { /* ... kode abang sudah benar ... */ }
-    public function edit($id) { /* ... kode abang sudah benar ... */ }
-    public function delete($id) { /* ... kode abang sudah benar ... */ }
 }
