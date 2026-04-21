@@ -53,7 +53,9 @@
                             <i class="bi bi-arrow-repeat text-warning fs-2"></i>
                         </div>
                         <h5 class="card-title text-muted mb-1">Sirkulasi Aktif</h5>
-                        <h3 class="fw-bold mb-0"><?= $sirkulasi_aktif; ?></h3>
+                        <h3 class="fw-bold mb-0 <?= ($sirkulasi_aktif > 0) ? 'text-warning' : 'text-dark'; ?>">
+                            <?= $sirkulasi_aktif; ?>
+                        </h3>
                     </div>
                     <div class="card-footer bg-transparent border-0 text-center pb-3">
                         <a href="<?= base_url('peminjaman'); ?>" class="btn btn-sm btn-outline-warning rounded-pill px-3">Detail</a>
