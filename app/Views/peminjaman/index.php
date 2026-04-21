@@ -1,112 +1,95 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<?= $this->extend('layouts/main') ?>
+<?= $this->section('content') ?>
 
-<div class="container mt-4">
-    <div class="card shadow border-0" style="border-radius: 12px;">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
-            <h5 class="mb-0"><i class="fas fa-book-reader me-2"></i> Verifikasi Peminjaman Buku</h5>
-            <div>
-                <a href="<?= base_url('dashboard'); ?>" class="btn btn-warning btn-sm shadow-sm me-1">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
-                </a>
-               <a href="<?= base_url('peminjaman/create'); ?>" class="btn btn-primary mb-3">
-    <i class="bi bi-plus-lg"></i> Tambah Peminjaman
-</a>
-            </div>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-dark mb-0">Sirkulasi Peminjaman</h4>
+            <p class="text-muted small">Kelola data peminjaman buku perpustakaan</p>
         </div>
-        <div class="card-body">
+        <a href="<?= base_url('peminjaman/create') ?>" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Tambah Transaksi
+        </a>
+    </div>
 
-            <?php if (session()->getFlashdata('success')) : ?>
-                <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert">
-                    <i class="fas fa-check-circle me-2"></i> <?= session()->getFlashdata('success'); ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            <?php endif; ?>
+    <?php if (session()->getFlashdata('success')) : ?>
+        <div class="alert alert-success border-0 shadow-sm alert-dismissible fade show">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <?= session()->getFlashdata('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
 
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light border-bottom">
-                        <tr class="text-center small text-uppercase text-muted">
-                            <th width="50">No</th>
-                            <th class="text-start">Peminjam</th>
-                            <th class="text-start">Judul Buku</th>
-                            <th>Tgl Pinjam</th>
-                            <th>Tgl Kembali</th>
-                            <th>Status</th>
-                            <th width="200">Aksi</th>
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4 py-3" width="50">No</th>
+                            <th class="py-3">Peminjam</th>
+                            <th class="py-3">Buku</th>
+                            <th class="py-3">Batas Kembali</th>
+                            <th class="py-3 text-center">Status</th>
+                            <th class="py-3 text-center pe-4">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($peminjaman)) : ?>
-                            <?php $i = 1; foreach ($peminjaman as $p) : ?>
-                            <tr>
-                                <td class="text-center fw-bold"><?= $i++; ?></td>
-                                <td>
-                                    <div class="fw-bold"><?= $p['nama_anggota']; ?></div>
-                                    <small class="text-muted">ID: <?= $p['id_anggota']; ?></small>
-                                </td>
-                                <td>
-                                    <div class="text-primary fw-bold"><?= $p['judul']; ?></div>
-                                </td>
-                               <td class="text-center small">
-    <?php 
-        // Kita cek satu-satu kemungkinan nama kolomnya
-        $tgl_pinjam = $p['tanggal_pinjam'] ?? $p['tgl_pinjam'] ?? null;
-        if ($tgl_pinjam && $tgl_pinjam != '0000-00-00') {
-            echo date('d/m/Y', strtotime($tgl_pinjam));
-        } else {
-            echo '<span class="text-danger">Belum Set</span>';
-        }
-    ?>
-</td>
-<td class="text-center small">
-    <?php 
-        $tgl_kembali = $p['tanggal_kembali'] ?? $p['tgl_kembali'] ?? null;
-        if ($tgl_kembali && $tgl_kembali != '0000-00-00') {
-            echo date('d/m/Y', strtotime($tgl_kembali));
-        } else {
-            echo '<span class="text-muted">-</span>';
-        }
-    ?>
-</td>
-<td class="text-center">
-    <?php if($p['status'] == 'diajukan') : ?>
-        <span class="badge bg-info text-dark shadow-sm">Diajukan</span>
-    <?php elseif($p['status'] == 'di pinjam') : ?>
-        <span class="badge bg-warning text-dark shadow-sm">Di Pinjam</span>
-    <?php elseif($p['status'] == 'di kembalikan') : ?>
-        <span class="badge bg-success shadow-sm">Selesai</span>
-    <?php else : ?>
-        <span class="badge bg-secondary shadow-sm"><?= $p['status'] ?: 'Pending'; ?></span>
-    <?php endif; ?>
-</td>
-                                <td class="text-center">
-                                    <div class="btn-group shadow-sm">
-                                        <?php if ($p['status'] == 'diajukan') : ?>
-                                            <a href="<?= base_url('peminjaman/setujui/' . $p['id_peminjaman']) ?>" class="btn btn-sm btn-success" onclick="return confirm('ACC Pinjaman?')"><i class="fas fa-check"></i></a>
-                                            <a href="<?= base_url('peminjaman/tolak/' . $p['id_peminjaman']) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tolak?')"><i class="fas fa-times"></i></a>
-                                        <?php endif; ?>
+                        <?php $no = 1; foreach ($peminjaman as $p) : ?>
+                        <?php 
+                            $st = strtolower(trim($p['status'] ?? '')); 
+                        ?>
+                        <tr>
+                            <td class="ps-4 fw-bold text-muted"><?= $no++ ?></td>
+                            <td>
+                                <div class="fw-bold"><?= $p['nama_anggota'] ?></div>
+                                <small class="text-muted">ID: <?= $p['id_anggota'] ?></small>
+                            </td>
+                            <td><?= $p['judul'] ?></td>
+                            <td><?= date('d M Y', strtotime($p['tanggal_kembali'])) ?></td>
+                            <td class="text-center">
+                                <?php if ($st == 'di pinjam') : ?>
+                                    <span class="badge rounded-pill bg-warning text-dark px-3">Dipinjam</span>
+                                <?php elseif ($st == 'di kembalikan') : ?>
+                                    <span class="badge rounded-pill bg-success px-3">Dikembalikan</span>
+                                <?php elseif ($st == 'menunggu verifikasi' || $st == '') : ?>
+                                    <span class="badge rounded-pill bg-info text-dark px-3">Verifikasi</span>
+                                <?php else : ?>
+                                    <span class="badge rounded-pill bg-secondary px-3"><?= $p['status'] ?></span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center pe-4">
+                                <div class="btn-group">
+                                    <?php if ($st == 'menunggu verifikasi' || $st == '') : ?>
+                                        <a href="<?= base_url('peminjaman/setujui/' . $p['id_peminjaman']) ?>" class="btn btn-sm btn-success" title="Setujui">
+                                            <i class="bi bi-check-lg"></i>
+                                        </a>
+                                    <?php endif; ?>
 
-                                        <?php if ($p['status'] == 'di pinjam') : ?>
-                                            <a href="<?= base_url('peminjaman/kembalikan/' . $p['id_peminjaman']) ?>" class="btn btn-sm btn-primary" onclick="return confirm('Buku kembali?')"><i class="fas fa-undo"></i></a>
-                                        <?php endif; ?>
+                                    <?php if ($st == 'di pinjam') : ?>
+                                        <a href="<?= base_url('peminjaman/kembalikan/' . $p['id_peminjaman']) ?>" class="btn btn-sm btn-outline-success" title="Kembalikan" onclick="return confirm('Kembalikan buku?')">
+                                            <i class="bi bi-arrow-return-left"></i>
+                                        </a>
+                                    <?php endif; ?>
 
-                                        <a href="<?= base_url('peminjaman/edit/' . $p['id_peminjaman']); ?>" class="btn btn-sm btn-light border"><i class="fas fa-edit text-info"></i></a>
-                                        
-                                       <a href="<?= base_url('peminjaman/delete/' . $p['id_peminjaman']) ?>" 
-   onclick="return confirm('Yakin mau hapus?')" 
-   class="btn btn-danger btn-sm">
-   <i class="fa fa-trash"></i>
-</a>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <tr><td colspan="7" class="text-center py-5 text-muted">Data Kosong.</td></tr>
-                        <?php endif; ?>
+                                    <?php if ($st != 'di kembalikan') : ?>
+                                        <a href="<?= base_url('peminjaman/edit/' . $p['id_peminjaman']) ?>" class="btn btn-sm btn-outline-primary" title="Edit Data">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                    
+                                    <a href="<?= base_url('peminjaman/delete/' . $p['id_peminjaman']) ?>" class="btn btn-sm btn-outline-danger" title="Hapus" onclick="return confirm('Hapus transaksi?')">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<?= $this->endSection() ?>

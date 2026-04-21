@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\UsersModel; // Sesuaikan dengan nama class di file Model kamu
+use App\Models\UsersModel;
 
 class Users extends BaseController
 {
@@ -13,7 +13,6 @@ class Users extends BaseController
         $this->users = new UsersModel(); 
     }
 
-    // --- TAMBAHKAN INI (Fungsi Index) ---
     public function index()
     {
         $data = [
@@ -23,117 +22,132 @@ class Users extends BaseController
         return view('users/index', $data); 
     }
 
-    // --- TAMBAHKAN INI (Fungsi Create) ---
     public function create()
     {
-        return view('users/create');
+        $data = ['title' => 'Tambah User Baru'];
+        return view('users/create', $data);
     }
 
-   public function store()
-{
-    // 1. Ambil file foto
-    $fileFoto = $this->request->getFile('foto');
-    
-    // 2. Cek apakah ada foto yang diupload, kalau nggak ada pakai default
-    if ($fileFoto && $fileFoto->isValid() && !$fileFoto->hasMoved()) {
-        $namaFoto = $fileFoto->getRandomName();
-        $fileFoto->move('uploads/users', $namaFoto);
-    } else {
-        $namaFoto = 'default.png'; // Pastikan file default.png ada di folder
-    }
-
-    // 3. Koneksi database dan simpan
-    $this->db = \Config\Database::connect();
-    $this->db->table('users')->insert([
-        'nama'     => $this->request->getPost('nama'),
-        'email'    => $this->request->getPost('email'),
-        'username' => $this->request->getPost('username'),
-        'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-        'role'     => $this->request->getPost('role'),
-        'foto'     => $namaFoto
-    ]);
-
-    // 4. Balik ke halaman daftar user
-    return redirect()->to('/users')->with('success', 'User baru berhasil ditambah!');
-}
-    public function edit($id)
+    public function store()
     {
-        $userData = $this->users->find($id);
+        $fileFoto = $this->request->getFile('foto');
+        
+        if ($fileFoto && $fileFoto->isValid() && !$fileFoto->hasMoved()) {
+            $namaFoto = $fileFoto->getRandomName();
+            $fileFoto->move('uploads/users', $namaFoto);
+        } else {
+            $namaFoto = 'default.png';
+        }
+
+        $this->users->insert([
+            'nama'     => $this->request->getPost('nama'),
+            'email'    => $this->request->getPost('email'),
+            'username' => $this->request->getPost('username'),
+            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'role'     => $this->request->getPost('role'),
+            'foto'     => $namaFoto
+        ]);
+
+        return redirect()->to('/users')->with('success', 'User baru berhasil ditambah!');
+    }
+
+    public function edit($id = null)
+    {
+        $id_target = $id ?? session()->get('id_user') ?? session()->get('id');
+        $userData = $this->users->find($id_target);
+        
         if (!$userData) {
-            return redirect()->to('/users')->with('error', 'User tidak ditemukan');
+            return redirect()->to('/users')->with('error', 'User tidak ditemukan.');
         }
 
         $data = [
-            'title' => 'Edit User',
-            'user'  => $userData
+            'title' => 'Edit Profile',
+            'user'  => $userData 
         ];
+
         return view('users/edit', $data);
     }
 
     public function update($id)
-{
-    $oldUser = $this->users->find($id);
-    
-    // Jika data lama tidak ketemu, hentikan proses
-    if (!$oldUser) {
-        return redirect()->to('/users')->with('error', 'User tidak ditemukan');
-    }
-
-    $foto = $this->request->getFile('foto');
-    $namaFoto = $oldUser['foto'];
-
-    if ($foto && $foto->isValid() && !$foto->hasMoved()) {
-        $namaFoto = $foto->getRandomName();
-        $foto->move(FCPATH . 'uploads/users', $namaFoto);
-        if ($oldUser['foto'] && $oldUser['foto'] != 'default.png' && file_exists(FCPATH . 'uploads/users/' . $oldUser['foto'])) {
-            @unlink(FCPATH . 'uploads/users/' . $oldUser['foto']);
-        }
-    }
-
-    // ============== PERBAIKAN DI SINI ==============
-    $dataUpdate = [
-        'id'       => $id, // GANTI id_user MENJADI id
-        'nama'     => $this->request->getPost('nama'),
-        'email'    => $this->request->getPost('email'),
-        'username' => $this->request->getPost('username'),
-        'role'     => $this->request->getPost('role'),
-        'foto'     => $namaFoto
-    ];
-    // ===============================================
-
-    $pass = $this->request->getPost('password');
-    if ($pass) {
-        $dataUpdate['password'] = password_hash($pass, PASSWORD_DEFAULT);
-    }
-
-    // Gunakan update() lebih aman daripada save() untuk proses edit
-    $this->users->update($id, $dataUpdate);
-
-    // Update session juga sesuaikan id-nya
-    if (session()->get('id') == $id) { 
-        session()->set('nama', $dataUpdate['nama']);
-        session()->set('foto', $namaFoto);
-        session()->set('role', $dataUpdate['role']); // Tambahkan ini agar role di session juga update
-    }
-
-    return redirect()->to('/users')->with('success', 'Data berhasil diperbarui!');
-}
-public function delete($id)
-{
-    // Cari data dulu untuk hapus foto
-    $user = $this->users->find($id);
-
-    if ($user) {
-        // Hapus foto jika bukan default
-        if ($user['foto'] && $user['foto'] != 'default.png') {
-            @unlink(FCPATH . 'uploads/users/' . $user['foto']);
+    {
+        $userLama = $this->users->find($id);
+        if (!$userLama) {
+            return redirect()->to('/users')->with('error', 'User tidak ditemukan.');
         }
         
-        // Hapus data dari database
-        $this->users->delete($id);
-        return redirect()->to('/users')->with('success', 'User berhasil dihapus');
+        $dataUpdate = [
+            'nama'     => $this->request->getPost('nama'),
+            'email'    => $this->request->getPost('email'),
+            'username' => $this->request->getPost('username'),
+            'role'     => $this->request->getPost('role'),
+        ];
+
+        $passBaru = $this->request->getPost('password');
+        if (!empty($passBaru)) {
+            $dataUpdate['password'] = password_hash($passBaru, PASSWORD_DEFAULT);
+        }
+
+        $fileFoto = $this->request->getFile('foto');
+        if ($fileFoto && $fileFoto->isValid() && !$fileFoto->hasMoved()) {
+            $namaFoto = $fileFoto->getRandomName();
+            $fileFoto->move('uploads/users', $namaFoto);
+            
+            if ($userLama['foto'] != 'default.png' && file_exists('uploads/users/' . $userLama['foto'])) {
+                @unlink('uploads/users/' . $userLama['foto']);
+            }
+            $dataUpdate['foto'] = $namaFoto;
+        }
+
+        // Jalankan Update
+        $this->users->update($id, $dataUpdate);
+
+        // --- UPDATE SESSION BIAR MENU GAK HILANG ---
+        $currentSessionId = session()->get('id_user') ?? session()->get('id');
+        
+        if ($currentSessionId == $id) {
+            // Ambil data terbaru dari DB biar Role-nya SAMA PERSIS formatnya
+            $userBaru = $this->users->find($id);
+
+            session()->set([
+                'id_user'   => $id,
+                'nama'      => $userBaru['nama'],
+                'foto'      => $userBaru['foto'],
+                'role'      => $userBaru['role'], // Ini biar sinkron sama database
+                'logged_in' => true
+            ]);
+        }
+
+        return redirect()->to('/users')->with('success', 'Data berhasil diperbarui!');
     }
 
-    return redirect()->to('/users')->with('error', 'Gagal menghapus, data tidak ditemukan');
-}
+    public function delete($id)
+    {
+        $user = $this->users->find($id);
+        if ($user) {
+            if ($user['foto'] != 'default.png' && file_exists('uploads/users/' . $user['foto'])) {
+                @unlink('uploads/users/' . $user['foto']);
+            }
+            $this->users->delete($id);
+            return redirect()->to('/users')->with('success', 'User berhasil dihapus');
+        }
+        return redirect()->to('/users')->with('error', 'Data tidak ditemukan');
+    }
+
+    public function peminjaman()
+    {
+        $data = ['title' => 'Daftar Peminjaman'];
+        return view('peminjaman/index', $data);
+    }
+
+    public function pengembalian()
+    {
+        $data = ['title' => 'Data Pengembalian'];
+        return view('pengembalian/index', $data);
+    }
+
+    public function denda()
+    {
+        $data = ['title' => 'Data Denda'];
+        return view('denda/index', $data);
+    }
 }

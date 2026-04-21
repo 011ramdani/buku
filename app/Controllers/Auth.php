@@ -9,8 +9,11 @@ class Auth extends Controller
 {
     public function login()
     {
-        // Kalau sudah login, jangan kasih masuk ke halaman login lagi
+        // Jika sudah login, lempar sesuai role
         if (session()->get('logged_in')) {
+            if (session()->get('role') == 'Anggota') {
+                return redirect()->to('/dashboard');
+            }
             return redirect()->to('/dashboard');
         }
         return view('auth/login');
@@ -18,48 +21,53 @@ class Auth extends Controller
 
     public function prosesLogin()
     {
-        $session = session();
-        $usersModel = new UsersModel();
-        $db = \Config\Database::connect(); // Kita butuh koneksi DB buat cek tabel anggota
-
+        $db = \Config\Database::connect();
+        $model = new UsersModel();
+        
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
-        $users = $usersModel->getUsersByUsername($username);
+        // 1. CEK DI TABEL USERS (ADMIN/PETUGAS)
+        $user = $model->where('username', $username)->first();
 
-        if ($users) {
-            if (password_verify($password, $users['password'])) {
-                
-                // --- BAGIAN BARU: CARI ID_ANGGOTA JIKA DIA ANGGOTA ---
-                $id_anggota = null;
-                if ($users['role'] == 'anggota') {
-                    $query = $db->table('anggota')->getWhere(['user_id' => $users['id']])->getRowArray();
-                    if ($query) {
-                        $id_anggota = $query['id_anggota'];
-                    }
-                }
-                // -----------------------------------------------------
-
-                $session->set([
-                    'id'         => $users['id'],
-                    'id_anggota' => $id_anggota, // Simpan ID Anggota di sini!
-                    'nama'       => $users['nama'],
-                    'email'      => $users['email'],
-                    'username'   => $users['username'],
-                    'role'       => $users['role'],
-                    'foto'       => $users['foto'],
-                    'logged_in'  => true
+        if ($user) {
+            if (password_verify($password, $user['password'])) {
+                $fixRole = ucfirst(strtolower($user['role']));
+                session()->set([
+                    'id_user'   => $user['id_user'] ?? $user['id'],
+                    'username'  => $user['username'],
+                    'nama'      => $user['nama'],
+                    'role'      => $fixRole,
+                    'foto'      => $user['foto'] ?? 'default.png',
+                    'logged_in' => true
                 ]);
-
                 return redirect()->to('/dashboard');
             } else {
-                $session->setFlashdata('salahpw', 'Password salah');
-                return redirect()->to('/login');
+                return redirect()->back()->with('error', 'Password Admin Salah');
             }
-        } else {
-            $session->setFlashdata('error', 'Nama tidak ditemukan');
-            return redirect()->to('/login');
         }
+
+        // 2. CEK DI TABEL ANGGOTA (KALAU DI USERS GAK ADA)
+        $anggota = $db->table('anggota')->where('username', $username)->get()->getRowArray();
+
+        if ($anggota) {
+            if (password_verify($password, $anggota['password'])) {
+                session()->set([
+                    'id_anggota' => $anggota['id_anggota'],
+                    'username'   => $anggota['username'],
+                    'nama'       => $anggota['nama_anggota'],
+                    'role'       => 'Anggota',
+                    'foto'       => 'default.png',
+                    'logged_in'  => true
+                ]);
+                return redirect()->to('/dashboard');
+            } else {
+                return redirect()->back()->with('error', 'Password Anggota Salah');
+            }
+        }
+
+        // 3. JIKA SEMUA GAGAL
+        return redirect()->back()->with('error', 'User tidak ditemukan');
     }
 
     public function logout()

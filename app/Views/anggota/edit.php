@@ -18,8 +18,8 @@
                     <textarea name="alamat" class="form-control" rows="3"><?= $anggota['alamat']; ?></textarea>
                 </div>
                 <div class="mb-3">
-                    <label>No HP</label>
-                    <input type="text" name="no_hp" class="form-control" value="<?= $anggota['no_hp']; ?>">
+                    <label>No wa</label>
+                    <input type="text" name="no_wa" class="form-control" value="<?= $anggota['no_wa']; ?>">
                 </div>
                 <button type="submit" class="btn btn-success">Update Data</button>
               <a href="<?= base_url('anggota'); ?>" class="btn btn-secondary">Batal</a>

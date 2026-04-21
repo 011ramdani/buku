@@ -10,5 +10,5 @@ class AnggotaModel extends Model
     protected $primaryKey = 'id_anggota';
     
     // Sesuaikan dengan foto struktur tabel Mas
-    protected $allowedFields = ['user_id', 'nis', 'nama_anggota', 'alamat', 'no_hp', 'tanggal_daftar'];
+   protected $allowedFields = ['nis', 'nama_anggota', 'username', 'password', 'role', 'alamat', 'no_hp'];
 }

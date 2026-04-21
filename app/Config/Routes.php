@@ -24,12 +24,14 @@ $routes->get('/logout', 'Auth::logout');
 $routes->get('/', 'Home::index', $authFilter);
 $routes->get('/dashboard', 'Home::index', $authFilter);
 
-$routes->get('users', 'Users::index');           // Untuk tampilan daftar
-$routes->get('users/create', 'Users::create');    // Untuk form tambah
-$routes->post('users/store', 'Users::store');     // Untuk proses simpan
-$routes->get('users/edit/(:num)', 'Users::edit/$1');
-$routes->post('users/update/(:num)', 'Users::update/$1');
-$routes->get('users/delete/(:num)', 'Users::delete/$1');
+$routes->get('users', 'Users::index');
+$routes->get('users/create', 'Users::create');
+$routes->post('users/store', 'Users::store');
+
+// INI KUNCINYA: Harus ada (:any) dan $1
+$routes->get('users/edit/(:any)', 'Users::edit/$1');
+$routes->post('users/update/(:any)', 'Users::update/$1');
+$routes->get('users/delete/(:any)', 'Users::delete/$1');
 // Tambahkan baris ini di Routes.php
 $routes->get('petugas', 'UserController::index');
 $routes->get('buku', 'Buku::index');
@@ -61,6 +63,11 @@ $routes->get('peminjaman/ajukan/(:num)', 'Peminjaman::ajukan/$1');
 $routes->get('peminjaman/setujui/(:num)', 'Peminjaman::setujui/$1');
 $routes->get('peminjaman/tolak/(:num)', 'Peminjaman::tolak/$1');
 
+$routes->get('katalog', 'Katalog::index');
+// Tambahkan atau pastikan baris ini ada
+$routes->get('profile', 'Anggota::profile');
+$routes->post('anggota/update_profile', 'Anggota::update_profile');
+$routes->get('anggota/profile', 'Anggota::profile'); // Tambahan biar aman kalau terlanjur pakai link lama
 
 $routes->get('anggota', 'Anggota::index');
 $routes->get('anggota/create', 'Anggota::create');

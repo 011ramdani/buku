@@ -47,9 +47,9 @@
                             </td>
                             <td class="text-center pe-4">
                                 <div class="btn-group shadow-sm">
-                                    <a href="<?= base_url('users/edit/' . $u['id']) ?>" class="btn btn-sm btn-outline-info" title="Edit">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    <a href="<?= base_url('users/edit/' . $u['id']) ?>" class="btn btn-sm btn-outline-info">
+    <i class="bi bi-pencil-square"></i>
+</a>
                                     <a href="<?= base_url('users/delete/' . $u['id']) ?>" 
                                        class="btn btn-sm btn-outline-danger" 
                                        onclick="return confirm('Hapus user ini?')" title="Hapus">

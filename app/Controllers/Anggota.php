@@ -2,81 +2,115 @@
 
 namespace App\Controllers;
 
-use App\Models\AnggotaModel;
+use CodeIgniter\Controller;
 
-class Anggota extends BaseController
+class Anggota extends Controller
 {
-    protected $anggotaModel;
+    protected $db;
 
     public function __construct() {
-        $this->anggotaModel = new AnggotaModel();
+        $this->db = \Config\Database::connect();
     }
 
-    public function index() {
-        $data = [
-            'title'   => 'Daftar Anggota',
-            'anggota' => $this->anggotaModel->findAll()
-        ];
-        return view('anggota/index', $data);
-    }
-
-    public function create() {
-        return view('anggota/create', ['title' => 'Tambah Anggota']);
-    }
-
-    public function save()
-{
-    $usersModel = new \App\Models\UsersModel();
-    $anggotaModel = new \App\Models\AnggotaModel();
-
-    // 1. DAFTARKAN KE TABEL USERS DULU
-    $userData = [
-        'username' => $this->request->getPost('nis'), // Kita pakai NIS buat username biar gampang
-        'password' => password_hash('12345', PASSWORD_DEFAULT), // Password default semua anggota
-        'role'     => 'anggota',
-        'nama'     => $this->request->getPost('nama_anggota'),
-        'foto'     => 'default.png'
+   public function index() {
+    $data = [
+        'title'   => 'Data Anggota',
+        // Ambil semua kolom termasuk username
+        'anggota' => $this->db->table('anggota')->select('*')->get()->getResultArray()
     ];
-    
-    $usersModel->insert($userData);
-    
-    // 2. AMBIL ID USER YANG BARU SAJA DIBUAT TADI
-    $newUserId = $usersModel->insertID(); 
+    return view('anggota/index', $data);
+}
+    public function create() {
+        $data = ['title' => 'Tambah Anggota Baru'];
+        return view('anggota/create', $data);
+    }
 
-    // 3. MASUKKAN KE TABEL ANGGOTA DENGAN USER_ID OTOMATIS
-    $anggotaData = [
-        'user_id'      => $newUserId, // <--- INI DIA OTOMATISNYA!
+    // --- INI YANG HARUS DIGANTI JADI 'save' ---
+ public function save() {
+    $data = [
         'nis'          => $this->request->getPost('nis'),
         'nama_anggota' => $this->request->getPost('nama_anggota'),
+        'username'     => $this->request->getPost('username'), // INI HARUS ADA
+        'password'     => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT), // INI JUGA
+        'no_wa'        => $this->request->getPost('no_wa'),
         'alamat'       => $this->request->getPost('alamat'),
-        'no_hp'        => $this->request->getPost('no_hp'),
+        'role'         => 'anggota'
     ];
-
-    $anggotaModel->insert($anggotaData);
-
-    return redirect()->to('/anggota')->with('pesan', 'Data Berhasil Ditambah & Akun Login Otomatis Dibuat!');
+    $this->db->table('anggota')->insert($data);
+    return redirect()->to('/anggota')->with('success', 'Data berhasil disimpan!');
 }
-
-    public function edit($id) {
+// Halaman form edit anggota
+    public function edit($id)
+    {
         $data = [
-            'title'   => 'Edit Anggota',
-            'anggota' => $this->anggotaModel->find($id)
+            'title'   => 'Edit Data Anggota',
+            'anggota' => $this->db->table('anggota')->where('id_anggota', $id)->get()->getRowArray()
         ];
+
+        if (!$data['anggota']) {
+            return redirect()->to('/anggota')->with('error', 'Data anggota tidak ditemukan.');
+        }
+
         return view('anggota/edit', $data);
     }
 
-    public function update($id) {
-        $this->anggotaModel->update($id, [
-            'nis'          => $this->request->getPost('nis'),
+    // Proses simpan perubahan data anggota
+    public function update($id)
+    {
+        $dataUpdate = [
             'nama_anggota' => $this->request->getPost('nama_anggota'),
-            'alamat'       => $this->request->getPost('alamat'),
-            'no_hp'        => $this->request->getPost('no_hp')
-        ]);
-        return redirect()->to('/anggota');
+            'username'     => $this->request->getPost('username'),
+        ];
+
+        // Jika password diisi, maka update passwordnya
+        $passBaru = $this->request->getPost('password');
+        if (!empty($passBaru)) {
+            $dataUpdate['password'] = password_hash($passBaru, PASSWORD_DEFAULT);
+        }
+
+        $this->db->table('anggota')->where('id_anggota', $id)->update($dataUpdate);
+        return redirect()->to('/anggota')->with('success', 'Data anggota berhasil diperbarui!');
+    }
+    public function profile()
+{
+    $db = \Config\Database::connect();
+    // Ambil ID dari session yang login
+    $id = session()->get('id_anggota');
+
+    $data = [
+        'title'   => 'Profil Saya',
+        'anggota' => $db->table('anggota')->where('id_anggota', $id)->get()->getRowArray()
+    ];
+
+    // Kita arahkan ke view profil
+    return view('anggota/profile', $data);
+}
+
+public function update_profile()
+{
+    $db = \Config\Database::connect();
+    $id = session()->get('id_anggota');
+    $fileFoto = $this->request->getFile('foto');
+
+    $dataUpdate = [
+        'nama_anggota' => $this->request->getPost('nama'),
+        'username'     => $this->request->getPost('username'),
+    ];
+
+    if ($fileFoto && $fileFoto->isValid() && !$fileFoto->hasMoved()) {
+        $namaFoto = $fileFoto->getRandomName();
+        $fileFoto->move('uploads/users/', $namaFoto); // Pindahkan ke folder users
+        $dataUpdate['foto'] = $namaFoto; // Simpan ke kolom 'foto'
+        
+        session()->set('foto', $namaFoto); // Update session biar langsung berubah
     }
 
+    $db->table('anggota')->where('id_anggota', $id)->update($dataUpdate);
+
+    return redirect()->to(base_url('profile'))->with('success', 'Profil Berhasil Diupdate');
+}
     public function delete($id) {
-        $this->anggotaModel->delete($id);
-        return redirect()->to('/anggota');
+        $this->db->table('anggota')->where('id_anggota', $id)->delete();
+        return redirect()->to('/anggota')->with('success', 'Anggota berhasil dihapus!');
     }
 }

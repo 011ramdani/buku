@@ -36,7 +36,7 @@
                             <th class="ps-4 py-3" width="60">No</th>
                             <th class="py-3">NIS</th>
                             <th class="py-3">Nama Lengkap</th>
-                            <th class="py-3">No. WhatsApp</th>
+                            <th class="py-3">Username</th> <th class="py-3">No. WhatsApp</th>
                             <th class="py-3">Alamat</th>
                             
                             <?php if (session()->get('role') != 'anggota') : ?>
@@ -50,15 +50,18 @@
                             <td class="ps-4 text-muted"><?= $no++; ?></td>
                             <td><span class="badge bg-light text-dark border"><?= $a['nis']; ?></span></td>
                             <td>
-                                <div class="fw-bold"><?= $a['nama_anggota']; ?></div>
+                                <div class="fw-bold text-primary"><?= $a['nama_anggota']; ?></div>
                             </td>
                             <td>
-                                <a href="https://wa.me/<?= $a['no_hp']; ?>" target="_blank" class="text-decoration-none text-dark">
-                                    <i class="bi bi-whatsapp text-success me-1"></i> <?= $a['no_hp']; ?>
+                                <span class="text-muted"><i class="bi bi-at"></i><?= $a['username']; ?></span>
+                            </td>
+                            <td>
+                                <a href="https://wa.me/<?= $a['no_wa']; ?>" target="_blank" class="text-decoration-none text-dark">
+                                    <i class="bi bi-whatsapp text-success me-1"></i> <?= $a['no_wa']; ?>
                                 </a>
                             </td>
                             <td>
-                                <span class="text-truncate d-inline-block" style="max-width: 200px;" title="<?= $a['alamat']; ?>">
+                                <span class="text-truncate d-inline-block" style="max-width: 150px;" title="<?= $a['alamat']; ?>">
                                     <?= $a['alamat']; ?>
                                 </span>
                             </td>
@@ -80,12 +83,9 @@
                         
                         <?php if (empty($anggota)) : ?>
                         <tr>
-                            <td colspan="<?= (session()->get('role') != 'anggota') ? '6' : '5'; ?>" class="text-center py-5">
+                            <td colspan="<?= (session()->get('role') != 'anggota') ? '7' : '6'; ?>" class="text-center py-5">
                                 <i class="bi bi-people text-muted" style="font-size: 3rem;"></i>
                                 <p class="mt-2 text-muted">Belum ada data anggota terdaftar.</p>
-                                <?php if (session()->get('role') != 'anggota') : ?>
-                                    <a href="<?= base_url('anggota/create'); ?>" class="btn btn-sm btn-primary">Tambah Sekarang</a>
-                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endif; ?>

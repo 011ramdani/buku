@@ -13,13 +13,10 @@ class PeminjamanModel extends Model
         'tanggal_pinjam', 'tanggal_kembali', 'status'
     ];
 
-  public function getPeminjaman()
-{
+ public function getPeminjaman() {
     return $this->db->table('peminjaman')
         ->join('anggota', 'anggota.id_anggota = peminjaman.id_anggota')
         ->join('buku', 'buku.id_buku = peminjaman.id_buku')
-        ->select('peminjaman.*, anggota.nama_anggota, buku.judul')
-        // Hapus orderBy yang spesifik id_pengembalian karena bikin error
         ->get()->getResultArray();
 }
 }

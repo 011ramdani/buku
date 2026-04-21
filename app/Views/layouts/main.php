@@ -1,72 +1,119 @@
 <!doctype html>
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> Dadan </title>
+    <title><?= $title ?? 'Dadan Library' ?></title>
 
-    <!-- Bootstrap CSS Lokal -->
     <link href="<?= base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/bootstrap-icons-1.13.1/bootstrap-icons.css') ?>" rel="stylesheet">
 
-   <style>
-    body {
-        /* Geser konten ke kanan biar nggak tumpang tindih */
-        padding-left: 250px; 
-        /* Pastikan warna background body sama dengan konten (Putih/Abu sangat muda) */
-        background-color: #ffffff !important; 
-        margin: 0;
-    }
+    <style>
+        body {
+            background-color: #f4f7f6;
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
 
-    .sidebar-simpel {
-        width: 250px;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-        background-color: #212529; /* Warna gelap sidebar */
-        border: none !important;
-        box-shadow: none !important; /* Hapus bayangan kalau bikin garis baru */
-    }
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #212529;
+            color: white;
+            padding-top: 10px;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
 
-    /* Ini bagian buat mastiin gak ada gap atau sela warna */
-    .container-fluid, .main-content {
-        background-color: #ffffff !important;
-        min-height: 100vh;
-    }
+        /* Konten Utama */
+        .content {
+            margin-left: 260px;
+            padding: 30px;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
 
-    .nav-pills .nav-link {
-        color: #adb5bd;
-        border-radius: 8px;
-        margin-bottom: 5px;
-        transition: 0.3s;
-    }
+        /* Profile Image di Sidebar */
+        .profile-img {
+            width: 75px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #0d6efd;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
 
-    .nav-pills .nav-link.active {
-        background-color: #0d6efd !important;
-        color: white;
-    }
+        /* Nav Pills Styling */
+        .nav-pills .nav-link {
+            color: #adb5bd;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            padding: 12px 15px;
+            transition: 0.2s;
+            font-weight: 500;
+        }
 
-    .nav-pills .nav-link:hover {
-        background-color: rgba(255,255,255,0.1);
-        color: white;
-    }
-</style>
+        .nav-pills .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #0d6efd !important;
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 992px) {
+            .sidebar { 
+                width: 100%; 
+                height: auto; 
+                position: relative; 
+                padding-bottom: 15px;
+            }
+            .content { 
+                margin-left: 0; 
+                padding: 20px;
+            }
+        }
+
+        /* Custom Scrollbar Sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <?php include(APPPATH . 'Views/layouts/menu.php'); ?>
-    </div>
+    <aside class="sidebar shadow">
+        <div class="px-3">
+            <?php include(APPPATH . 'Views/layouts/menu.php'); ?>
+        </div>
+    </aside>
 
-    <!-- Konten Utama -->
-    <div class="content">
-        <?= $this->renderSection('content') ?>
-    </div>
+    <main class="content">
+        <div class="container-fluid">
+            
+           
 
-    <!-- Bootstrap JS Lokal -->
+            <?= $this->renderSection('content') ?>
+            
+        </div>
+    </main>
+
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
 </body>
 
