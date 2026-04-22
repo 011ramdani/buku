@@ -75,3 +75,4 @@ $routes->post('anggota/save', 'Anggota::save');
 $routes->get('anggota/edit/(:num)', 'Anggota::edit/$1');
 $routes->post('anggota/update/(:num)', 'Anggota::update/$1');
 $routes->get('anggota/delete/(:num)', 'Anggota::delete/$1');
+

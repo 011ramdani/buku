@@ -11,7 +11,6 @@
 
     <style>
         body {
-            /* Perpaduan Biru Laut (Deep Ocean) ke Biru Langit (Sky Blue) */
             background: linear-gradient(135deg, #0077b6 0%, #90e0ef 100%);
             height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -21,7 +20,7 @@
             border: none;
             border-radius: 20px;
             overflow: hidden;
-            background: rgba(255, 255, 255, 0.95); /* Putih bersih transparan dikit */
+            background: rgba(255, 255, 255, 0.95);
         }
 
         .login-header {
@@ -33,15 +32,15 @@
         .icon-box {
             width: 70px;
             height: 70px;
-            background: #caf0f8; /* Biru muda pucat */
-            color: #0077b6; /* Biru laut */
+            background: #caf0f8;
+            color: #0077b6;
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
             font-size: 30px;
-            transform: rotate(-10deg); /* Biar estetik dikit */
+            transform: rotate(-10deg);
         }
 
         .form-label {
@@ -69,7 +68,7 @@
         }
 
         .btn-login {
-            background: #0077b6; /* Warna Biru Laut */
+            background: #0077b6;
             border: none;
             padding: 12px;
             border-radius: 10px;
@@ -80,7 +79,7 @@
         }
 
         .btn-login:hover {
-            background: #023e8a; /* Biru lebih gelap saat dihover */
+            background: #023e8a;
             transform: scale(1.02);
             box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
         }
@@ -119,6 +118,12 @@
                     </div>
                 <?php endif; ?>
 
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success border-0 small shadow-sm mb-4">
+                        <i class="bi bi-check-circle-fill me-2"></i><?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
                 <?php if (session()->getFlashdata('salahpw')): ?>
                     <div class="alert alert-warning border-0 small shadow-sm mb-4 text-dark">
                         <i class="bi bi-shield-exclamation-fill me-2"></i><?= session()->getFlashdata('salahpw') ?>
@@ -126,12 +131,13 @@
                 <?php endif; ?>
 
                 <form action="<?= base_url('/proses-login') ?>" method="post">
+                    <?= csrf_field(); ?>
 
                     <div class="mb-3">
                         <label class="form-label small">Username</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                            <input type="text" name="username" class="form-control border-start-0" placeholder="Username Anda" required>
+                            <input type="text" name="username" class="form-control border-start-0" placeholder="Username Anda" required autofocus>
                         </div>
                     </div>
 
@@ -143,16 +149,15 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary btn-login w-100 mb-3 text-white">
+                    <button type="submit" class="btn btn-primary btn-login w-100 mb-3 text-white">
                         Sign In <i class="bi bi-arrow-right-short ms-1"></i>
                     </button>
-
                 </form>
 
                 <div class="text-center">
-                    <p class="text-muted small mb-0">Belum terdaftar sebagai petugas?</p>
-                    <a href="<?= base_url('users/create') ?>" class="register-link small">
-                        Buat Akun Baru
+                    <p class="text-muted small mb-0">Ingin bergabung menjadi dengan kami?</p>
+                    <a href="<?= base_url('auth/register') ?>" class="register-link small">
+                        Daftar Akun Baru
                     </a>
                 </div>
 
@@ -162,5 +167,4 @@
 
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
 </body>
-
 </html>
