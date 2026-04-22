@@ -75,5 +75,50 @@ class Auth extends Controller
         session()->destroy();
         return redirect()->to('/login');
     }
-    
+    // Fungsi untuk menampilkan halaman pendaftaran
+    public function register()
+    {
+        // Kalau sudah login, tendang ke dashboard
+        if (session()->get('logged_in')) {
+            return redirect()->to('/dashboard');
+        }
+
+        $data = [
+            'title' => 'Daftar Anggota Baru | Dadan Library'
+        ];
+        return view('auth/register', $data);
+    }
+
+    // Fungsi untuk memproses penyimpanan data pendaftaran
+    public function save_register()
+    {
+        $db = \Config\Database::connect();
+        
+        // Ambil data dari form
+        $nama     = $this->request->getPost('nama');
+        $username = $this->request->getPost('username');
+        $password = $this->request->getPost('password');
+
+        // Validasi sederhana: Cek apakah username sudah dipakai di tabel anggota
+        $cek = $db->table('anggota')->where('username', $username)->get()->getRow();
+        
+        if ($cek) {
+            return redirect()->back()->with('error', 'Username sudah terdaftar, gunakan yang lain!');
+        }
+
+        // Siapkan data untuk disimpan ke tabel anggota
+        $data = [
+            'nama_anggota' => $nama,
+            'username'     => $username,
+            // Password di-hash biar aman (encrypted)
+            'password'     => password_hash($password, PASSWORD_DEFAULT),
+            'status'       => 'Aktif' // Default anggota baru langsung aktif
+        ];
+
+        // Simpan ke tabel anggota
+        $db->table('anggota')->insert($data);
+
+        // Kasih notif sukses dan balik ke halaman login
+        return redirect()->to('/login')->with('success', 'Pendaftaran Berhasil! Silakan Login.');
+    }
 }

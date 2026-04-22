@@ -76,3 +76,5 @@ $routes->get('anggota/edit/(:num)', 'Anggota::edit/$1');
 $routes->post('anggota/update/(:num)', 'Anggota::update/$1');
 $routes->get('anggota/delete/(:num)', 'Anggota::delete/$1');
 
+$routes->get('auth/register', 'Auth::register');
+$routes->post('auth/save_register', 'Auth::save_register');
