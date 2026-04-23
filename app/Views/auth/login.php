@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Dadan Library</title>
+    <title>Login & Register | Dadan Library</title>
 
     <link href="<?= base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/bootstrap-icons-1.13.1/bootstrap-icons.css') ?>" rel="stylesheet">
@@ -12,8 +12,11 @@
     <style>
         body {
             background: linear-gradient(135deg, #0077b6 0%, #90e0ef 100%);
-            height: 100vh;
+            min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
         }
 
         .login-card {
@@ -21,25 +24,26 @@
             border-radius: 20px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.95);
+            transition: all 0.3s ease;
         }
 
         .login-header {
             background: transparent;
             border-bottom: none;
-            padding-top: 40px;
+            padding-top: 30px;
         }
 
         .icon-box {
-            width: 70px;
-            height: 70px;
+            width: 65px;
+            height: 65px;
             background: #caf0f8;
             color: #0077b6;
-            border-radius: 20px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 30px;
+            margin: 0 auto 15px;
+            font-size: 28px;
             transform: rotate(-10deg);
         }
 
@@ -50,7 +54,7 @@
 
         .form-control {
             border-radius: 10px;
-            padding: 12px;
+            padding: 10px 12px;
             border: 1px solid #ade8f4;
             background-color: #f8fdff;
         }
@@ -88,6 +92,7 @@
             color: #0077b6;
             text-decoration: none;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .register-link:hover {
@@ -99,72 +104,114 @@
 
 <body>
 
-    <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="container d-flex justify-content-center">
         <div class="card login-card shadow-lg" style="width: 420px;">
             
-            <div class="card-header login-header text-center">
-                <div class="icon-box shadow-sm">
-                    <i class="bi bi-bookmarks-fill"></i>
-                </div>
-                <h3 class="fw-bold" style="color: #03045e;">DADAN 01</h3>
-                <p class="text-muted small">Library Management System</p>
-            </div>
-
-            <div class="card-body px-4 pb-5">
-
-                <?php if (session()->getFlashdata('error')): ?>
-                    <div class="alert alert-danger border-0 small shadow-sm mb-4">
-                        <i class="bi bi-x-octagon-fill me-2"></i><?= session()->getFlashdata('error') ?>
+            <div id="box-login">
+                <div class="card-header login-header text-center">
+                    <div class="icon-box shadow-sm">
+                        <i class="bi bi-bookmarks-fill"></i>
                     </div>
-                <?php endif; ?>
-
-                <?php if (session()->getFlashdata('success')): ?>
-                    <div class="alert alert-success border-0 small shadow-sm mb-4">
-                        <i class="bi bi-check-circle-fill me-2"></i><?= session()->getFlashdata('success') ?>
-                    </div>
-                <?php endif; ?>
-
-                <?php if (session()->getFlashdata('salahpw')): ?>
-                    <div class="alert alert-warning border-0 small shadow-sm mb-4 text-dark">
-                        <i class="bi bi-shield-exclamation-fill me-2"></i><?= session()->getFlashdata('salahpw') ?>
-                    </div>
-                <?php endif; ?>
-
-                <form action="<?= base_url('/proses-login') ?>" method="post">
-                    <?= csrf_field(); ?>
-
-                    <div class="mb-3">
-                        <label class="form-label small">Username</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                            <input type="text" name="username" class="form-control border-start-0" placeholder="Username Anda" required autofocus>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label small">Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
-                            <input type="password" name="password" class="form-control border-start-0" placeholder="Password Anda" required>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-login w-100 mb-3 text-white">
-                        Sign In <i class="bi bi-arrow-right-short ms-1"></i>
-                    </button>
-                </form>
-
-                <div class="text-center">
-                    <p class="text-muted small mb-0">Ingin bergabung menjadi dengan kami?</p>
-                    <a href="<?= base_url('auth/register') ?>" class="register-link small">
-                        Daftar Akun Baru
-                    </a>
+                    <h3 class="fw-bold" style="color: #03045e;">DADAN 01</h3>
+                    <p class="text-muted small">Library Management System</p>
                 </div>
 
-            </div>
-        </div>
-    </div>
+                <div class="card-body px-4 pb-4">
+                    <?php if (session()->getFlashdata('error')): ?>
+                        <div class="alert alert-danger border-0 small shadow-sm mb-3">
+                            <i class="bi bi-x-octagon-fill me-2"></i><?= session()->getFlashdata('error') ?>
+                        </div>
+                    <?php endif; ?>
 
-    <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+                    <?php if (session()->getFlashdata('success')): ?>
+                        <div class="alert alert-success border-0 small shadow-sm mb-3">
+                            <i class="bi bi-check-circle-fill me-2"></i><?= session()->getFlashdata('success') ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form action="<?= base_url('/proses-login') ?>" method="post">
+                        <?= csrf_field(); ?>
+                        <div class="mb-3">
+                            <label class="form-label small">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                <input type="text" name="username" class="form-control border-start-0" placeholder="Username Anda" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label small">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+                                <input type="password" name="password" class="form-control border-start-0" placeholder="Password Anda" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-login w-100 mb-3 text-white">
+                            Sign In <i class="bi bi-arrow-right-short ms-1"></i>
+                        </button>
+                    </form>
+
+                    <div class="text-center">
+                        <p class="text-muted small mb-0">Belum punya akun anggota?</p>
+                        <a onclick="showRegister()" class="register-link small">Daftar Akun Baru</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="box-register" style="display: none;">
+                <div class="card-header login-header text-center">
+                    <div class="icon-box shadow-sm" style="background: #e9edc9; color: #606c38;">
+                        <i class="bi bi-person-plus-fill"></i>
+                    </div>
+                    <h3 class="fw-bold" style="color: #03045e;">JOIN US</h3>
+                    <p class="text-muted small">Daftar Anggota Baru</p>
+                </div>
+
+                <div class="card-body px-4 pb-4">
+                    <form action="<?= base_url('auth/save_register') ?>" method="post">
+                        <?= csrf_field(); ?>
+                        <div class="mb-2">
+                            <label class="form-label small">NIS</label>
+                            <input type="number" name="nis" class="form-control" placeholder="Masukkan NIS" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small">Nama Lengkap</label>
+                            <input type="text" name="nama" class="form-control" placeholder="Nama asli Anda" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small">Username</label>
+                            <input type="text" name="username" class="form-control" placeholder="Buat username" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Buat password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-login w-100 mb-3 text-white" style="background: #606c38;">
+                            Daftar Sekarang <i class="bi bi-check-circle ms-1"></i>
+                        </button>
+                    </form>
+
+                    <div class="text-center">
+                        <p class="text-muted small mb-0">Sudah punya akun?</p>
+                        <a onclick="showLogin()" class="register-link small">Kembali ke Login</a>
+                    </div>
+                </div>
+            </div>
+
+        </div> </div> <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+    
+    <script>
+        function showRegister() {
+            document.getElementById('box-login').style.display = 'none';
+            document.getElementById('box-register').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('box-register').style.display = 'none';
+            document.getElementById('box-login').style.display = 'block';
+        }
+    </script>
 </body>
 </html>

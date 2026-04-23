@@ -176,4 +176,19 @@ class Buku extends BaseController
         $data['buku'] = $builder->get()->getRowArray();
         return view('buku/detail', $data);
     }
+   public function print()
+{
+    $db = \Config\Database::connect();
+    
+    // Melakukan Join agar kita bisa mengambil 'nama_penulis' dan 'nama_kategori'
+    $data['buku'] = $db->table('buku')
+        ->select('buku.*, penulis.nama_penulis, kategori.nama_kategori')
+        ->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'left')
+        ->join('kategori', 'kategori.id_kategori = buku.id_kategori', 'left')
+        ->get()->getResultArray();
+    
+    $data['title'] = "Laporan Koleksi Buku | Dadan Library";
+
+    return view('buku/print', $data);
+}
 }

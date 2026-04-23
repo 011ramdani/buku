@@ -52,7 +52,6 @@
                             <option value="">-- Pilih Role --</option>
                             <option value="admin">Admin</option>
                             <option value="petugas">Petugas</option>
-                            <option value="anggota">Anggota</option>
                         </select>
                     </div>
 

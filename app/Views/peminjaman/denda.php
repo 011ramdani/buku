@@ -10,7 +10,7 @@
         
         <form action="" method="get" class="d-flex">
             <div class="input-group shadow-sm">
-                <input type="text" name="keyword" class="form-control" placeholder="Cari nama atau buku..." value="<?= request()->getGet('keyword') ?>">
+                <input type="text" name="keyword" class="form-control" placeholder="Cari nama denda..." value="<?= request()->getGet('keyword') ?>">
                 <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
             </div>
         </form>

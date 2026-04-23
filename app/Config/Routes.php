@@ -27,6 +27,8 @@ $routes->get('/dashboard', 'Home::index', $authFilter);
 $routes->get('users', 'Users::index');
 $routes->get('users/create', 'Users::create');
 $routes->post('users/store', 'Users::store');
+// Jika menggunakan controller Users
+$routes->get('users/edit/(:num)', 'Users::edit/$1');
 
 // INI KUNCINYA: Harus ada (:any) dan $1
 $routes->get('users/edit/(:any)', 'Users::edit/$1');
@@ -76,5 +78,9 @@ $routes->get('anggota/edit/(:num)', 'Anggota::edit/$1');
 $routes->post('anggota/update/(:num)', 'Anggota::update/$1');
 $routes->get('anggota/delete/(:num)', 'Anggota::delete/$1');
 
-$routes->get('auth/register', 'Auth::register');
-$routes->post('auth/save_register', 'Auth::save_register');
+$routes->get('auth/login', 'Auth::login');
+$routes->post('proses-login', 'Auth::proses_login');
+$routes->post('auth/save_register', 'Auth::save_register'); // Tambahkan baris ini
+
+$routes->get('home/deleteLog/(:num)', 'Home::deleteLog/$1');
+$routes->get('home/clearAllLogs', 'Home::clearAllLogs');

@@ -51,22 +51,29 @@ class Users extends BaseController
         return redirect()->to('/users')->with('success', 'User baru berhasil ditambah!');
     }
 
-    public function edit($id = null)
-    {
-        $id_target = $id ?? session()->get('id_user') ?? session()->get('id');
-        $userData = $this->users->find($id_target);
-        
-        if (!$userData) {
-            return redirect()->to('/users')->with('error', 'User tidak ditemukan.');
-        }
+   public function edit($id = null)
+{
+    // Ambil ID dari parameter URL, jika kosong ambil dari session
+    // Pastikan nama key session ('id_user') sudah sesuai dengan saat login
+    $id_target = $id ?? session()->get('id_user');
 
-        $data = [
-            'title' => 'Edit Profile',
-            'user'  => $userData 
-        ];
-
-        return view('users/edit', $data);
+    if (!$id_target) {
+        return redirect()->to('/users')->with('error', 'ID User tidak valid.');
     }
+
+    $userData = $this->users->find($id_target);
+    
+    if (!$userData) {
+        return redirect()->to('/users')->with('error', 'User tidak ditemukan di database.');
+    }
+
+    $data = [
+        'title' => 'Edit Profile - ' . $userData['nama'],
+        'user'  => $userData 
+    ];
+
+    return view('users/edit', $data);
+}
 
     public function update($id)
     {

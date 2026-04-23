@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="id">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,13 +107,34 @@
     <main class="content">
         <div class="container-fluid">
             
-           
+            <?php if (session()->getFlashdata('success')) : ?>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: '<?= session()->getFlashdata('success') ?>',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                </script>
+            <?php endif; ?>
+
+            <?php if (session()->getFlashdata('error')) : ?>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Waduh!',
+                        text: '<?= session()->getFlashdata('error') ?>',
+                    });
+                </script>
+            <?php endif; ?>
 
             <?= $this->renderSection('content') ?>
             
         </div>
     </main>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
 </body>
 
