@@ -156,6 +156,9 @@
                         <p class="text-muted small mb-0">Belum punya akun anggota?</p>
                         <a onclick="showRegister()" class="register-link small">Daftar Akun Baru</a>
                     </div>
+                    <a href="<?= base_url('restore') ?>" class="btn btn-outline-danger btn-sm">
+<i class="bi bi-database"></i> Restore DB
+</a>
                 </div>
             </div>
 
@@ -191,6 +194,8 @@
                         <button type="submit" class="btn btn-primary btn-login w-100 mb-3 text-white" style="background: #606c38;">
                             Daftar Sekarang <i class="bi bi-check-circle ms-1"></i>
                         </button>
+
+                        
                     </form>
 
                     <div class="text-center">

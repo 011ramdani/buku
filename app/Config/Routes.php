@@ -24,15 +24,12 @@ $routes->get('/logout', 'Auth::logout');
 $routes->get('/', 'Home::index', $authFilter);
 $routes->get('/dashboard', 'Home::index', $authFilter);
 
+// Tambahkan ini di bagian route (Cari baris $routes->get...)
 $routes->get('users', 'Users::index');
 $routes->get('users/create', 'Users::create');
-$routes->post('users/store', 'Users::store');
-// Jika menggunakan controller Users
-$routes->get('users/edit/(:num)', 'Users::edit/$1');
-
-// INI KUNCINYA: Harus ada (:any) dan $1
-$routes->get('users/edit/(:any)', 'Users::edit/$1');
-$routes->post('users/update/(:any)', 'Users::update/$1');
+$routes->post('users/save', 'Users::save');
+$routes->get('users/edit/(:any)', 'Users::edit/$1'); // WAJIB ADA INI
+$routes->post('users/update/(:any)', 'Users::update/$1'); // WAJIB ADA INI
 $routes->get('users/delete/(:any)', 'Users::delete/$1');
 // Tambahkan baris ini di Routes.php
 $routes->get('petugas', 'UserController::index');
@@ -60,6 +57,10 @@ $routes->get('peminjaman/delete_denda/(:num)', 'Peminjaman::delete_denda/$1');
 $routes->get('peminjaman/konfirmasi_bayar/(:num)', 'Peminjaman::konfirmasi_bayar/$1');
 // Route untuk pengajuan pinjam oleh Anggota
 $routes->get('peminjaman/ajukan/(:num)', 'Peminjaman::ajukan/$1');
+$routes->get('peminjaman/denda_anggota', 'Peminjaman::denda_anggota');
+$routes->post('peminjaman/upload_dana', 'Peminjaman::upload_dana');
+// Tambahkan baris ini
+$routes->post('pembayaran/upload_dana', 'Pembayaran::upload_dana');
 
 // Route untuk persetujuan oleh Admin
 $routes->get('peminjaman/setujui/(:num)', 'Peminjaman::setujui/$1');
@@ -84,3 +85,10 @@ $routes->post('auth/save_register', 'Auth::save_register'); // Tambahkan baris i
 
 $routes->get('home/deleteLog/(:num)', 'Home::deleteLog/$1');
 $routes->get('home/clearAllLogs', 'Home::clearAllLogs');
+
+$routes->get('/backup', 'Backup::index');
+
+$routes->get('/restore', 'Restore::index');
+$routes->post('/restore/auth', 'Restore::auth');
+$routes->get('/restore/form', 'Restore::form');
+$routes->post('/restore/process', 'Restore::process');

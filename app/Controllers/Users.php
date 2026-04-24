@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\UsersModel;
+use App\Models\UsersModel; // Sesuaikan dengan nama model Abang
 
 class Users extends BaseController
 {
@@ -10,18 +10,16 @@ class Users extends BaseController
 
     public function __construct()
     {
-        $this->users = new UsersModel(); 
+        $this->users = new UsersModel();
     }
 
     public function index()
     {
         $data = [
-            'title' => 'Data Users',
             'users' => $this->users->findAll()
         ];
-        return view('users/index', $data); 
+        return view('users/index', $data);
     }
-
     public function create()
     {
         $data = ['title' => 'Tambah User Baru'];
@@ -51,29 +49,22 @@ class Users extends BaseController
         return redirect()->to('/users')->with('success', 'User baru berhasil ditambah!');
     }
 
-   public function edit($id = null)
-{
-    // Ambil ID dari parameter URL, jika kosong ambil dari session
-    // Pastikan nama key session ('id_user') sudah sesuai dengan saat login
-    $id_target = $id ?? session()->get('id_user');
+ public function edit($id = null)
+    {
+        // Cari data berdasarkan ID yang dikirim dari URL
+        $userData = $this->users->find($id);
 
-    if (!$id_target) {
-        return redirect()->to('/users')->with('error', 'ID User tidak valid.');
+        if (!$userData) {
+            return redirect()->to('/users')->with('error', 'User tidak ditemukan.');
+        }
+
+        $data = [
+            'title' => 'Edit User',
+            'user'  => $userData
+        ];
+
+        return view('users/edit', $data);
     }
-
-    $userData = $this->users->find($id_target);
-    
-    if (!$userData) {
-        return redirect()->to('/users')->with('error', 'User tidak ditemukan di database.');
-    }
-
-    $data = [
-        'title' => 'Edit Profile - ' . $userData['nama'],
-        'user'  => $userData 
-    ];
-
-    return view('users/edit', $data);
-}
 
     public function update($id)
     {

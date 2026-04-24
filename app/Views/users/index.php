@@ -198,11 +198,11 @@
                             </td>
                             <td class="pe-4">
                                 <div class="d-flex justify-content-center gap-2">
-                                   <a href="<?= base_url('users/edit/' . $u['id']) ?>" class="..."> ... </a>
-                                       class="action-btn btn-edit" 
-                                       title="Edit User">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                   <a href="<?= base_url('users/edit/' . ($u['id'] ?? $u['id_user'] ?? '')) ?>" 
+   class="btn btn-sm btn-light text-info border shadow-xs" 
+   title="Edit Data">
+    <i class="bi bi-pencil-square"></i>
+</a>
                                     <a href="<?= base_url('users/delete/' . $u['id']) ?>" 
                                        class="action-btn btn-delete" 
                                        onclick="return confirm('Hapus user <?= $u['nama']; ?>?')" 
