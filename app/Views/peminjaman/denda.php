@@ -62,15 +62,25 @@
                                     </div>
 
                                     <div class="modal fade" id="modalLihatDana<?= $d['id_denda'] ?>" tabindex="-1">
-                                        <div class="modal-dialog modal-dialog-centered modal-sm">
-                                            <div class="modal-content border-0 shadow">
-                                                <div class="modal-header border-0 pb-0">
-                                                    <h6 class="modal-title fw-bold">Bukti Transfer DANA</h6>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        <div class="modal-dialog modal-dialog-centered modal-md"> <div class="modal-content border-0 shadow-lg">
+                                                <div class="modal-header bg-primary text-white">
+                                                    <h6 class="modal-title fw-bold text-white"><i class="bi bi-receipt me-2"></i>Bukti Transfer DANA</h6>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <img src="<?= base_url('assets/uploads/bukti_dana/' . $d['bukti_bayar']) ?>" class="img-fluid rounded-3 shadow-sm border">
-                                                    <p class="mt-2 mb-0 small text-muted">Pastikan nominal sesuai sebelum verifikasi.</p>
+                                                <div class="modal-body text-center bg-light">
+                                                    <img src="<?= base_url('assets/uploads/bukti_dana/' . $d['bukti_bayar']) ?>" 
+                                                         class="img-fluid rounded shadow-sm border" 
+                                                         style="max-height: 70vh; width: 100%; object-fit: contain;">
+                                                    <div class="mt-3 p-2 bg-white rounded border">
+                                                        <p class="mb-0 fw-bold text-dark small">Pengirim: <?= $d['nama_anggota'] ?></p>
+                                                        <p class="mb-0 text-muted small">Total Denda: <span class="text-danger fw-bold">Rp <?= number_format($d['jumlah_denda'], 0, ',', '.') ?></span></p>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer border-0">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                    <?php if ($d['status'] == 'belum bayar') : ?>
+                                                        <a href="<?= base_url('peminjaman/konfirmasi_bayar/' . $d['id_denda']) ?>" class="btn btn-primary">Konfirmasi Sekarang</a>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,18 +103,18 @@
                                         <a href="<?= base_url('peminjaman/konfirmasi_bayar/' . $d['id_denda']) ?>" 
                                            class="btn btn-sm btn-primary px-3" 
                                            onclick="return confirm('Konfirmasi terima denda Rp <?= number_format($d['jumlah_denda'], 0, ',', '.') ?>?')">
-                                            <i class="bi bi-shield-check me-1"></i> Verifikasi
+                                             <i class="bi bi-shield-check me-1"></i> Verifikasi
                                         </a>
                                     <?php else : ?>
                                         <button class="btn btn-sm btn-light disabled text-muted fw-bold border">
-                                            <i class="bi bi-check-lg text-success"></i> Selesai
+                                             <i class="bi bi-check-lg text-success"></i> Selesai
                                         </button>
                                     <?php endif; ?>
 
                                     <a href="<?= base_url('peminjaman/delete_denda/' . $d['id_denda']) ?>" 
                                        class="btn btn-sm btn-outline-danger ms-1" 
                                        onclick="return confirm('Hapus riwayat denda ini?')">
-                                        <i class="bi bi-trash"></i>
+                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </div>
                             </td>
@@ -120,6 +130,7 @@
 <style>
     .table td { padding-top: 12px; padding-bottom: 12px; }
     .badge { font-weight: 500; font-size: 0.75rem; }
+    .modal-header .btn-close { filter: brightness(0) invert(1); } /* Putih tombol close */
 </style>
 
 <?= $this->endSection() ?>
