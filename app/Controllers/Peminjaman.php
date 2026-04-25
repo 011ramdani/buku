@@ -6,7 +6,7 @@ use App\Models\PeminjamanModel;
 use App\Models\AnggotaModel;
 use App\Models\BukuModel;
 use App\Models\LogModel;
-use App\Models\DendaModel; // HARUS ADA INI BANG
+use App\Models\DendaModel;
 
 class Peminjaman extends BaseController
 {
@@ -24,6 +24,33 @@ class Peminjaman extends BaseController
         $this->log = new LogModel();
         $this->dendaModel = new DendaModel();
     }
+
+    public function store()
+    {
+        // 1. Ambil data dari form Peminjaman
+        $data = [
+            'id_buku'         => $this->request->getPost('id_buku'),
+            'id_anggota'      => $this->request->getPost('id_anggota'),
+            'tanggal_pinjam'  => $this->request->getPost('tanggal_pinjam'),
+            'tanggal_kembali' => $this->request->getPost('tanggal_kembali'),
+            'status'          => 'Dipinjam', 
+        ];
+
+        // 2. Simpan ke Database
+        // PERBAIKAN: Gunakan $this->pinjam (sesuai yang di construct)
+        $this->pinjam->insert($data);
+
+        // 3. Tambahan Opsional: Catat ke Log Aktivitas (Biar keren)
+        $nama_user = session()->get('nama');
+        $this->log->insert([
+            'pesan' => "$nama_user menambahkan transaksi peminjaman baru.",
+            'status_verifikasi' => 'selesai'
+        ]);
+
+        // 4. Redirect
+        return redirect()->to(base_url('peminjaman'))->with('success', 'Transaksi Peminjaman berhasil dicatat!');
+    }
+
 
     public function index()
     {
