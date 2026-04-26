@@ -7,9 +7,7 @@ class Backup extends Controller
     public function index()
     {
     
-    if (session()->get('role') != 'admin') {
-    return redirect()->to('/dashboard');
-}
+    if (session()->get('role') != 'admin') 
     
         $db      = \Config\Database::connect();
         $dbName  = $db->getDatabase();
