@@ -69,24 +69,28 @@
                 </a>
             </li>
 
+
             <li class="nav-item mt-1">
                 <a href="<?= base_url('peminjaman/list_denda') ?>" class="nav-link text-white <?= (uri_string() == 'peminjaman/list_denda') ? 'active' : '' ?>">
                     <i class="bi bi-cash-stack me-2 text-warning"></i> Data Denda Admin
                 </a>
             </li>
         <?php endif; ?>
+
+
+
+
     </ul>
+
+
 
     <hr class="border-secondary">
 
     <ul class="nav nav-pills flex-column">
-        <?php if (session()->get('role') == 'admin') : ?>
-            <li class="nav-item mb-2">
-                <a href="<?= base_url('/backup') ?>" class="btn btn-success btn-sm w-100 text-start">
-                    <i class="bi bi-database-fill-down me-2"></i> Backup Database
-                </a>
-            </li>
-        <?php endif; ?>
+       <?php if ($role == 'admin' || $role == 'petugas') : ?>
+<a href="<?= base_url('/backup') ?>" class="btn btn-success">Backup Database</a>
+<?php endif; ?>
+
 
         <li class="nav-item">
             <?php 

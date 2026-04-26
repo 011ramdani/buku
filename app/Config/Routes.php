@@ -27,6 +27,7 @@ $routes->get('/dashboard', 'Home::index', $authFilter);
 // Tambahkan ini di bagian route (Cari baris $routes->get...)
 $routes->get('users', 'Users::index');
 $routes->post('users/store', 'Users::store'); 
+$routes->get('users/create', 'Users::create');
 // Sesuaikan 'Users' dengan nama Controller yang Abang gunakan
 $routes->post('users/save', 'Users::save');
 $routes->get('users/edit/(:any)', 'Users::edit/$1'); // WAJIB ADA INI
