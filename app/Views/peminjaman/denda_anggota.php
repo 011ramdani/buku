@@ -69,8 +69,10 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <div class="modal-body text-center">
-                                                    <p class="small text-muted mb-3">Silakan scan QRIS di bawah ini</p>
-                                                    <img src="<?= base_url('assets/img/qris.jpg') ?>" class="img-fluid rounded-3 mb-3 border p-2 bg-white">
+                                                    <p class="small text-muted mb-3">Silakan hubungi admin/petugas</p>
+                                                   <a href="https://wa.me/<?= $b['no_admin'] ?? '#' ?>" target="_blank" class="btn btn-light btn-action text-success" title="Hubungi Admin">
+                                        <i class="bi bi-whatsapp"></i>
+                                    </a>
                                                     
                                                     <form action="<?= base_url('pembayaran/upload_dana') ?>" method="post" enctype="multipart/form-data">
                                                         <?= csrf_field() ?>
