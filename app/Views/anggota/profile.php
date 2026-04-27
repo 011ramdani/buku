@@ -27,6 +27,19 @@
                         <input type="text" name="username" class="form-control" value="<?= $anggota['username'] ?>" required>
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nomor WhatsApp</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-whatsapp"></i></span>
+                            <input type="number" name="no_wa" class="form-control" placeholder="Contoh: 08123456789" value="<?= $anggota['no_wa'] ?>">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Alamat</label>
+                        <textarea name="alamat" class="form-control" rows="2"><?= $anggota['alamat'] ?></textarea>
+                    </div>
+
                     <div class="mb-4">
                         <label class="form-label fw-bold">Ganti Foto Profil</label>
                         <input type="file" name="foto" class="form-control" accept="image/*">
