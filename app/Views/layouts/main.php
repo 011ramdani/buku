@@ -17,7 +17,7 @@
             overflow-x: hidden;
         }
 
-        /* Sidebar Styling */
+        /* Sidebar Styling - Kembali ke Standar */
         .sidebar {
             width: 260px;
             height: 100vh;
@@ -30,47 +30,13 @@
             padding-top: 10px;
             overflow-y: auto;
             border-right: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s;
         }
 
-        /* Konten Utama */
+        /* Konten Utama - Kembali ke Standar */
         .content {
             margin-left: 260px;
             padding: 30px;
             min-height: 100vh;
-            transition: all 0.3s;
-        }
-
-        /* Profile Image di Sidebar */
-        .profile-img {
-            width: 75px;
-            height: 75px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 3px solid #0d6efd;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        /* Nav Pills Styling */
-        .nav-pills .nav-link {
-            color: #adb5bd;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            padding: 12px 15px;
-            transition: 0.2s;
-            font-weight: 500;
-        }
-
-        .nav-pills .nav-link:hover {
-            background-color: rgba(255,255,255,0.1);
-            color: #fff;
-        }
-
-        .nav-pills .nav-link.active {
-            background-color: #0d6efd !important;
-            color: white !important;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
         }
 
         /* Responsive Mobile */
@@ -137,5 +103,4 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
 </body>
-
 </html>

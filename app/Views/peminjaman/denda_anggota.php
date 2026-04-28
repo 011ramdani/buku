@@ -65,23 +65,38 @@
                                         <div class="modal-dialog modal-sm modal-dialog-centered">
                                             <div class="modal-content border-0 shadow-lg rounded-4">
                                                 <div class="modal-header border-0 pb-0">
-                                                    <h6 class="modal-title fw-bold">Pembayaran DANA</h6>
+                                                    <h6 class="modal-title fw-bold">Scan QR DANA</h6>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
-                                                <div class="modal-body text-center">
-                                                    <p class="small text-muted mb-3">Silakan hubungi admin/petugas</p>
-                                                   <a href="https://wa.me/<?= $b['no_admin'] ?? '#' ?>" target="_blank" class="btn btn-light btn-action text-success" title="Hubungi Admin">
-                                        <i class="bi bi-whatsapp"></i>
-                                    </a>
+                                                <div class="modal-body text-center p-4">
+                                                    <p class="small text-muted mb-3">Total Tagihan: <br> <strong class="text-danger fs-6">Rp <?= number_format($d['jumlah_denda'], 0, ',', '.') ?></strong></p>
                                                     
-                                                    <form action="<?= base_url('pembayaran/upload_dana') ?>" method="post" enctype="multipart/form-data">
+                                                    <div class="p-2 rounded-4 bg-white border shadow-sm mb-3 d-inline-block">
+                                                        <?php 
+                                                            // Ganti dengan nomor DANA Abang
+                                                            $nomor_dana = "08123456789"; 
+                                                            $isi_qr = "https://link.dana.id/qr/" . $nomor_dana;
+                                                            $qr_api = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" . urlencode($isi_qr);
+                                                        ?>
+                                                        <img src="<?= $qr_api ?>" 
+                                                             alt="QR DANA" 
+                                                             style="width: 170px; height: 170px; object-fit: contain;">
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <a href="https://wa.me/62845631525" target="_blank" class="btn btn-light btn-sm text-success fw-bold border-success-subtle w-100">
+                                                            <i class="bi bi-whatsapp me-1"></i> Hubungi Admin
+                                                        </a>
+                                                    </div>
+                                                    
+                                                    <form action="<?= base_url('peminjaman/upload_dana') ?>" method="post" enctype="multipart/form-data">
                                                         <?= csrf_field() ?>
                                                         <input type="hidden" name="id_denda" value="<?= $d['id_denda'] ?>">
                                                         <div class="text-start mb-3">
-                                                            <label class="form-label small fw-bold">Upload Bukti Transfer</label>
+                                                            <label class="form-label small fw-bold text-secondary">Upload Bukti Transfer</label>
                                                             <input type="file" name="bukti_bayar" class="form-control form-control-sm border-2" required>
                                                         </div>
-                                                        <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold py-2">Kirim Bukti Pembayaran</button>
+                                                        <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold py-2 shadow-sm">Kirim Bukti Bayar</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -100,6 +115,7 @@
 <style>
     .rounded-4 { border-radius: 1rem !important; }
     .bg-primary.bg-opacity-10 { background-color: rgba(13, 110, 253, 0.1); }
+    .modal-content { overflow: hidden; }
 </style>
 
 <?= $this->endSection() ?>
