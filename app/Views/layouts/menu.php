@@ -126,17 +126,21 @@
 
 <div class="sidebar-dadan d-flex flex-column flex-shrink-0 p-3 text-white">
     
-    <div class="brand-box">
-        <a href="<?= base_url('/') ?>" class="d-flex align-items-center text-white text-decoration-none px-2">
-            <div class="logo-icon me-3">
+   <div class="brand-box">
+    <a href="<?= base_url('/') ?>" class="d-flex align-items-center text-white text-decoration-none px-2">
+        <div class="logo-icon me-3">
+            <div class="bg-white bg-opacity-25 p-2 rounded-3">
                 <i class="bi bi-book-half text-white fs-4"></i>
             </div>
-            <div>
-                <h5 class="mb-0 fw-bold tracking-tight">Dadan<span style="color: var(--item-active)">Lib</span></h5>
-                <small class="text-muted" style="font-size: 0.7rem;">Digital Management</small>
-            </div>
-        </a>
-    </div>
+        </div>
+        <div>
+            <h5 class="mb-0 fw-bold tracking-tight text-white">
+                Dadan<span style="color: #0d6efd;">Library</span> 
+            </h5>
+            <small class="text-white-50" style="font-size: 0.7rem; letter-spacing: 1px;">Digital Management</small>
+        </div>
+    </a>
+</div>
 
     <div class="profile-card-modern text-center">
         <div class="img-wrapper mb-3">
